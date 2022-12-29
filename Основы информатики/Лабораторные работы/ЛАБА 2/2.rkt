@@ -1,0 +1,6 @@
+(define (delete pred? xs)
+  (if (< (length xs) 1)
+      '()
+      (if (pred? (car xs))
+          (delete pred? (cdr xs))
+          (cons (car xs) (delete pred? (cdr xs))))))
