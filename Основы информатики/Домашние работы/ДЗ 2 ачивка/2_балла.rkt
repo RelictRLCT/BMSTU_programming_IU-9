@@ -1,0 +1,25 @@
+(define (list! x)
+  (if (list? x)
+      x
+      (list x)))
+
+(define (list-trim-right xs)
+  (define (l2 hitrost h)
+              (if (null? hitrost)
+                  done
+                  (if (not (or (equal? (car hitrost) #\space)
+                               (equal? (car hitrost) #\tab)
+                               (equal? (car hitrost) #\return)
+                               (equal? (car hitrost) #\newline)))
+                      (loop hitrost (append done (list! h)))
+                      (l2 (cdr hitrost) (append h (list (car hitrost)))))))
+  (let loop ((xs xs)
+             (done '()))
+    (if (null? xs)
+        done
+        (if (or (equal? (car xs) #\space)
+                (equal? (car xs) #\tab)
+                (equal? (car xs) #\return)
+                (equal? (car xs) #\newline))
+            (l2 xs '())
+            (loop (cdr xs) (append done (list (car xs))))))))
