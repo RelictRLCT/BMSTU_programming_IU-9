@@ -1,0 +1,15 @@
+(define (factorize expr)
+  (if (and (member 2 (cadr expr)))
+      (list '* (list '- (cadr (cadr expr)) (cadr (caddr expr)))
+            (list '+ (cadr (cadr expr)) (cadr (caddr expr))))
+      (if (and (member '- expr))
+          (list '*
+                (list '- (cadr (cadr expr)) (cadr (caddr expr)))
+                (list '+ (list 'expt (cadr (cadr expr)) 2)
+                      (list 'expt (cadr (caddr expr)) 2)
+                      (list '+ (list '* (cadr (cadr expr)) (cadr (caddr expr))))))
+          (list '*
+                (list '+ (cadr (cadr expr)) (cadr (caddr expr)))
+                (list '+ (list 'expt (cadr (cadr expr)) 2)
+                      (list 'expt (cadr (caddr expr)) 2)
+                      (list '- (list '* (cadr (cadr expr)) (cadr (caddr expr)))))))))
