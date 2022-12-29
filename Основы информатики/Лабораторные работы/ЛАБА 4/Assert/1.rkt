@@ -1,3 +1,4 @@
+(load "assert.rkt")
 (use-assertations)
 
 (define (1/x x)
