@@ -1,0 +1,11 @@
+(define (any? pred? xs)
+  (and (not (null? xs))(or (pred? (car xs)) (any? pred? (cdr xs)))))
+
+(define (all? pred? xs)
+  (or (and (< (length xs) 2)
+           (not (null? xs))
+           (pred? (car xs)))
+      (and (not (null? xs))
+           (pred? (car xs))
+           (all? pred? (cdr xs)))
+      (null? xs)))
