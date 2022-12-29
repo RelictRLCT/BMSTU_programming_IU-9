@@ -1,0 +1,6 @@
+(define (korni a b c)
+  (let ((d (- (* b b) (* 4 a c))))
+  (if (< d 0)
+      (list)
+      (if (= d 0) (list (/ (- b) (* 2 a)))
+          (if (> d 0) (list (/ (+ (- b) (sqrt d)) (* 2 a)) (/ (- (- b) (sqrt d)) (* 2 a))))))))
