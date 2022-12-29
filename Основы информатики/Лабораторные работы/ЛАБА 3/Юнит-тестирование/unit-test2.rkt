@@ -1,0 +1,31 @@
+(define-syntax test
+  (syntax-rules ()
+    ((test expr res)
+       (list 'expr 'res))))
+
+(define (run-test one-test)
+  (write (car one-test))
+  (let  ((expr2 (eval (car one-test) (interaction-environment))))
+    (if (equal? expr2 (cadr one-test))
+        (begin        
+          (display "=>")
+          (write (cadr one-test))
+          (display " OK")
+          (newline)
+          #t)
+        (begin
+          (newline)
+          (display "Ожидаемое значение: ")
+          (write (cadr one-test))
+          (newline)
+          (display "Вычисленное значение: ")
+          (write expr2)
+          (newline)
+          (display " НЕ ОК")
+          (newline)
+          #f))))
+
+(define (run-tests tests)
+  (or (null? tests)
+      (member #f (list (run-test (car tests))
+                                (run-tests (cdr tests))))))
