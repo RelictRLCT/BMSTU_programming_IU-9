@@ -24,8 +24,10 @@ void shellsort(unsigned long nel,
     for(i=i-1; i>0; --i)
     {
         if (FIB1[i]!=-1)
-        {FIB[j]=FIB1[i];
-        j+=1;}
+        {
+            FIB[j]=FIB1[i];
+            j+=1;
+        }
     }
     int fibm=j;
     int k;
@@ -34,8 +36,11 @@ void shellsort(unsigned long nel,
         {
             k=j-FIB[i];
             while(k>=0)
-            {if ((compare (j, k))==1 )
-                {swap(k, j);
-                }k-=FIB[i];}
+            {
+                if ((compare (j, k))==1 )
+                    {
+                        swap(k, j);
+                    }
+                k-=FIB[i];}
         }
 }
