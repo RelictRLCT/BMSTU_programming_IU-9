@@ -25,66 +25,53 @@ int ListLength(struct Elem* l)
     return len;
 }
 
-struct Elem* ListSearch(struct Elem* l, long int v)
+void swap(struct Elem* x, struct Elem* m, struct Elem* l)
 {
-    struct Elem* x=l->next;
-    while(x!=l and x->v!=v)
-        x=x->next;
+    struct Elem* ins=m;//перевязка элементов, где стоял m
+    m->next->prev=m->prev;
+    m->prev->next=m->next;
+
+    x->prev->next=ins;//вставка
+    ins->prev=x->prev;
+    x->prev=ins;
+    ins->next=x;
 }
 
-void swap(struct Elem* a, struct Elem* b)
-{
-    struct Elem* tmpan, *tmpbn, *tmpap, *tmpbp, *tmp;
-    tmpan=a->next;
-    tmpbn=b->next;
-    tmpap=a->prev;
-    tmpbp=b->prev;
-    long int tmpv=a->v;
-    a->v=b->v;
-    b->v=tmpv;
-}
-
-void InsertSort(struct Elem* l)
+void InsertSort(struct Elem* l, int len)
 {
     struct Elem* x=l;
     struct Elem* m=l;
-    for(int i=1; i<ListLength(l); ++i)
+    bool swaped=false;
+    for(int i=1; i<len+1; ++i)
     {
-        int count=0;
-        int countmin=0;
+        swaped=false;
         x=l;
-        m=l;
-        long int min=2147483647;
         for(int j=0; j<i-1; ++j)
-            {
-                x=x->next;
-            }
-        m=x->next;
-        while(m->next!=l)
         {
-            count+=1;
-            if(m->v < min)
-                {
-                    countmin=count;
-                    min=m->v;
-                }
-            m=m->next;
+            x=x->next;
         }
         m=x;
-        for(int j=0; j<countmin; ++j)
-            m=m->next;
-            if (x->v > m->v) swap(x, m);
+        while(x->prev->v!=-9909 and x->prev->v > m->v)
+        {
+            x=x->prev;
+            swaped=true;
+        }
+        if(swaped)
+        {
+            swap(x, m, l);
+        }
+        while(l->prev->v!=-9909)
+            l=l->next;
     }
-
 }
 
 void InsertAfter(struct Elem* x, struct Elem* y)
 {
-    struct Elem* z=x->next;//l
-    x->next=y;//l->next=val//l
-    y->prev=x;//val->prev=l//val
-    y->next=z;//val->next=l//l
-    z->prev=y;//l->prev=val//
+    struct Elem* z=x->next;
+    x->next=y;
+    y->prev=x;
+    y->next=z;
+    z->prev=y;
 }
 
 int main(int argc, char* argv[])
@@ -108,9 +95,13 @@ int main(int argc, char* argv[])
         l=l->next;
     }
     l=l->next->next;
-    InsertSort(l);
-    while(l->v!=-9909)
-        {printf("%ld ", l->v);
-        l=l->next;}
+    InsertSort(l, n);
+    while(l->prev->v!=-9909)
+        l=l->next;
+    for(int i=0; i<n; ++i)
+    {
+        printf("%ld ", l->v);
+        l=l->next;
+    }
     return 0;
 }
