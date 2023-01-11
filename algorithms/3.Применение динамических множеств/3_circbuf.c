@@ -30,12 +30,17 @@ void Enqueue(struct queue* q, long long int a)
     q->tail+=1;
     q->count+=1;
     if(q->tail==q->cap)
+        q->tail=0;
+    if(q->count==q->cap)
     {
         q->data=(long long  int*)realloc(q->data, sizeof(long long int)*2*q->cap);
+        for(int i=q->head; i<q->cap; ++i)
+        {
+            q->data[i+q->cap]=q->data[i];
+        }
+        q->head+=q->cap;
         q->cap*=2;
     }
-    if(q->tail==q->cap)
-        q->tail=0;
 }
 
 long long int Dequeue(struct queue* q)
@@ -63,8 +68,7 @@ void EMPTY(struct queue* q)
 
 void DEQ(struct queue* q)
 {
-    long long int x=Dequeue(q);
-    printf("%lld\n", x);
+    printf("%lld\n", Dequeue(q));
 }
 
 int main(int argc, char* argv[])
