@@ -27,4 +27,4 @@
     (lazy-cons (* n n1) (loop (+ n 1) (* n n1)))))
 
 (define (lazy-factorial n)
-  (lazy-ref (factor) n))
+  (lazy-ref (factor) (- n 1)))
