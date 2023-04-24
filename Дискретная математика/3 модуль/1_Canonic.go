@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type Vertex struct {
 	vers   []Edge
@@ -78,7 +80,7 @@ func main() {
 	g := make([]Vertex, n)
 
 	for i := 0; i < n; i++ {
-		g[i].number = -1
+		g[i].number = n - 1
 	}
 
 	graph(&g, D, F, n, m)
@@ -92,7 +94,7 @@ func main() {
 	fmt.Println(n, m, g[q0].number)
 	for i := 0; i < n; i++ {
 		for j := 0; j < m; j++ {
-			fmt.Print(D[numeration[i]][g[j].number], " ")
+			fmt.Print(g[D[numeration[i]][j]].number, " ")
 		}
 		fmt.Println()
 	}
