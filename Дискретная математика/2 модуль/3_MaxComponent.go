@@ -165,7 +165,12 @@ func main() {
 	for i := 0; i < graph.N; i++ {
 		for j := 0; j < len(graph.M[i]); j++ {
 			if graph.M[i][j] >= i {
-				fmt.Println("  ", i, "--", graph.M[i][j])
+				if graph.color[i] == "RED" {
+					fmt.Print("   ", i, " -- ", graph.M[i][j])
+					fmt.Println(" [color=red]")
+				} else {
+					fmt.Println("  ", i, "--", graph.M[i][j])
+				}
 			}
 		}
 	}
