@@ -31,7 +31,7 @@ func Insert(q *queue, g *[]Vertex, j int) {
 	i := q.count
 	q.count = i + 1
 	q.heap[i] = &(*g)[j]
-	for i > 0 && q.heap[(i-1)/2].sum > q.heap[i].sum {
+	for i > 0 && q.heap[(i-1)/2].dist > q.heap[i].dist {
 		q.heap[(i-1)/2], q.heap[i] = q.heap[i], q.heap[(i-1)/2]
 		q.heap[i].index = i
 		i = (i - 1) / 2
@@ -42,7 +42,7 @@ func Insert(q *queue, g *[]Vertex, j int) {
 func Decreasekey(q *queue, v *Vertex, k int) {
 	i := v.index
 	v.sum = k
-	for i > 0 && q.heap[(i-1)/2].sum > k {
+	for i > 0 && q.heap[(i-1)/2].dist > k {
 		q.heap[(i-1)/2], q.heap[i] = q.heap[i], q.heap[(i-1)/2]
 		q.heap[i].index = i
 		i = (i - 1) / 2
@@ -55,10 +55,10 @@ func Heapify(i int, n int, P *[]*Vertex) {
 		l := 2*i + 1
 		r := l + 1
 		j := i
-		if l < n && (*P)[i].sum > (*P)[l].sum {
+		if l < n && (*P)[i].dist > (*P)[l].dist {
 			i = l
 		}
-		if r < n && (*P)[i].sum > (*P)[r].sum {
+		if r < n && (*P)[i].dist > (*P)[r].dist {
 			i = r
 		}
 		if i == j {
@@ -82,9 +82,9 @@ func Extractmin(q *queue) *Vertex {
 }
 
 func Relax(v *Vertex, u *Vertex) bool {
-	changed := (v.sum+u.dist < u.sum)
+	changed := (v.dist+u.sum < u.dist)
 	if changed {
-		u.sum = v.sum + u.dist
+		u.dist = v.dist + u.sum
 	}
 	return changed
 }
@@ -99,7 +99,7 @@ func Dejkstra(g *[]Vertex, s *Vertex) {
 		v.index = -1
 		for _, u := range v.vers {
 			if u.index != -1 && Relax(v, u) {
-				Decreasekey(&q, u, u.sum)
+				Decreasekey(&q, u, u.dist)
 			}
 		}
 	}
@@ -112,24 +112,42 @@ func main() {
 	for i := 0; i < n*n; i++ {
 		var value int
 		fmt.Scan(&value)
-		g[i].dist = value
+		g[i].sum = value
 	}
 	for i := 0; i < n; i++ {
 		for j := 0; j < n; j++ {
 			g[i*n+j].vers = make([]*Vertex, 0)
 			if j != n-1 {
 				g[i*n+j].vers = append(g[i*n+j].vers, &g[i*n+j+1])
+				g[i*n+j+1].vers = append(g[i*n+j+1].vers, &g[i*n+j])
 			}
 			if i != n-1 {
 				g[i*n+j].vers = append(g[i*n+j].vers, &g[(i+1)*n+j])
+				g[(i+1)*n+j].vers = append(g[(i+1)*n+j].vers, &g[i*n+j])
+			}
+			if i != 0 {
+				g[i*n+j].vers = append(g[i*n+j].vers, &g[(i-1)*n+j])
+				g[(i-1)*n+j].vers = append(g[(i-1)*n+j].vers, &g[i*n+j])
+			}
+			if j != 0 {
+				g[i*n+j].vers = append(g[i*n+j].vers, &g[i*n+j-1])
+				g[i*n+j-1].vers = append(g[i*n+j-1].vers, &g[i*n+j])
 			}
 		}
 	}
-	g[0].sum = g[0].dist
+
+	g[0].dist = g[0].sum
 	for i := 1; i < n*n; i++ {
-		g[i].sum = math.MaxInt
+		g[i].dist = math.MaxInt
 	}
 	Dejkstra(&g, &g[0])
 
-	fmt.Println(g[n*n-1].sum)
+	for i := 0; i < n; i++ {
+		for j := 0; j < n; j++ {
+			fmt.Print(g[i*n+j].dist, "   ")
+		}
+		fmt.Println()
+	}
+
+	fmt.Println(g[n*n-1].dist)
 }
