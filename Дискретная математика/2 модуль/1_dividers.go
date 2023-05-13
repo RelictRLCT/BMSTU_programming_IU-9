@@ -1,15 +1,24 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sort"
+)
 
 func divs(x int) []int {
-	divs := make([]int, 1)
-	divs[0] = x
-	for i := x - 1; i >= 1; i-- {
+	divs := make([]int, 0)
+	for i := 1; i*i <= x; i++ {
 		if x%i == 0 {
-			divs = append(divs, i)
+			if i*i != x {
+				divs = append(divs, i)
+			}
+
+			divs = append(divs, x/i)
 		}
 	}
+
+	sort.Slice(divs, func(i int, j int) bool { return divs[j] < divs[i] })
+
 	return divs
 }
 
