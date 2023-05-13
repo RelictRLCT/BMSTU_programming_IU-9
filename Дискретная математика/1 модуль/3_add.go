@@ -20,27 +20,45 @@ func add(a, b []int32, p int) []int32 {
 		res[i] += a[i] + b[i]
 		for res[i] >= int32(p) {
 			res[i] -= int32(p)
+			if i+1 == len(res) {
+				res = append(res, 0)
+			}
 			res[i+1] += 1
 		}
 	}
 	res = append(res, 0)
 	for i := lenmin; i < lenres-1; i++ {
 		if len(a) > len(b) {
+			if i == len(res) {
+				res = append(res, 0)
+			}
 			res[i] += a[i]
 			for res[i] >= int32(p) {
 				res[i] -= int32(p)
+				if i+1 == len(res) {
+					res = append(res, 0)
+				}
 				res[i+1] += 1
 			}
 		} else {
+			if i == len(res) {
+				res = append(res, 0)
+			}
 			res[i] += b[i]
 			for res[i] >= int32(p) {
 				res[i] -= int32(p)
+				if i+1 == len(res) {
+					res = append(res, 0)
+				}
 				res[i+1] += 1
 			}
 		}
 	}
 
 	if res[len(res)-1] == 0 {
+		res = res[:len(res)-1]
+	}
+	for len(res) != 1 && res[len(res)-1] == 0 {
 		res = res[:len(res)-1]
 	}
 	return res
