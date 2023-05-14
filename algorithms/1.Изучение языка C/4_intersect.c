@@ -4,12 +4,9 @@
 
 int checkbit(int value, int position) {
     int result;
-    if ((value & (1 << position)) == 0)
-    {
+    if ((value & (1 << position)) == 0) {
         result = 0;
-    }
-    else
-    {
+    } else {
         result = 1;
     }
     return result;
@@ -42,5 +39,3 @@ int main(int argc, char* argv[])
     }
 
 }
-
-
