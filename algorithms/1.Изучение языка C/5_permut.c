@@ -16,14 +16,14 @@ int main(int argc, char* argv[])
 
     for(int i=0; i<N; ++i)
         for(int j=0; j<N; ++j)
+    {
+        if(a[i]==b[j])
         {
-            if(a[i]==b[j])
-            {
-                a[i]=-1000000;
-                b[j]=-1000000;
-                break;
-            }
+            a[i]=-1000000;
+            b[j]=-1000000;
+            break;
         }
+    }
     int k=0;
     for(int i=0; i<N; ++i)
         {
@@ -35,4 +35,5 @@ int main(int argc, char* argv[])
     else printf("no");
 
     return 0;
+
 }
