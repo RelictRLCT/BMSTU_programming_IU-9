@@ -3,7 +3,7 @@
 #include <stdbool.h>
 
 void bubblesort(unsigned long nel,
-        int (*compare)(unsigned long i, unsigned long j),
+        int (*compare)(unsigned long i, unsigned long j), 
         void (*swap)(unsigned long i, unsigned long j))
 {
     int c=1;
