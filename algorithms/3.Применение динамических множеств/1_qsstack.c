@@ -37,7 +37,6 @@ void Pop(struct stack* s, struct Task* x)
     s->top-=1;
     x->low=s->data[s->top].low;
     x->high=s->data[s->top].high;
-    //printf("%d\n", x->low);
 }
 
 int Partition(int low, int high, int* A)
@@ -101,6 +100,6 @@ int main(int argc, char* argv[])
         scanf("%d", &A[i]);
     QuickSortNotRec(n, A);
     for(int i=0; i<n; ++i)
-        printf("%5d", A[i]);
+        printf("%d ", A[i]);
     return 0;
 }
