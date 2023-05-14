@@ -25,10 +25,14 @@ int Partition(int low, int high, int* A)
     return i;
 }
 
+void QuickSortRec(int low, int high, int m, int* A);
+
 void QuickSort(int n, int m, int* A)
 {
     QuickSortRec(0, n-1, m, A);
 }
+
+void SelectSort(int low, int high, int* A);
 
 void QuickSortRec(int low, int high, int m, int* A)
 {
@@ -70,6 +74,6 @@ int main(int argc, char* argv[])
         scanf("%d", &A[i]);
     QuickSort(n, m, A);
     for(int i=0; i<n; ++i)
-        printf("%3d", A[i]);
+        printf("%d ", A[i]);
     return 0;
 }
