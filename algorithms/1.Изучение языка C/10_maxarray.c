@@ -11,9 +11,11 @@ int maxarray(void *base, size_t nel, size_t width,
     for(size_t i=0; i<nel; ++i)
     {
        char* tmp1=(char*)base+(i*width);
-        if ((compare((void*)tmp1, (void*)max))>0)
-            {max=(char*)tmp1;
-            maxind=i;}
+       if ((compare((void*)tmp1, (void*)max))>0)
+       {
+           max=(char*)tmp1;
+           maxind=i;
+       }
     }
     return maxind;
 }
