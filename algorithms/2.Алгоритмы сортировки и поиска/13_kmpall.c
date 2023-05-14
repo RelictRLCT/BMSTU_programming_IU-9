@@ -46,36 +46,10 @@ void KMP(char* S, char* T)
 
 int main(int argc, char* argv[])
 {
-    int i=0;
-    char c;
-    char* S=(char*)malloc(strlen(argv[1])+1);    //ввод с консоли
+    char* S=(char*)malloc(strlen(argv[1])+1);
     strcpy(S, argv[1]);
     char* T=(char*)malloc(strlen(argv[2])+1);
     strcpy(T, argv[2]);
-
-/*
-  char* S=(char*)malloc(1);                      //ввод с клавиатуры
-   scanf("%c", &c);
-   while(c!='\0'and c!='\n')
-   {
-       S[i]=c;
-       i+=1;
-       S=(char*)realloc(S, i+1);
-       scanf("%c", &c);
-   }
-   S[i]='\0';
-    i=0;
-   char* T=(char*)malloc(1);
-   scanf("%c", &c);
-   while(c!='\0'and c!='\n')
-   {
-       T[i]=c;
-       i+=1;
-       T=(char*)realloc(T, i+1);
-       scanf("%c", &c);
-   }
-   T[i]='\0';
-*/
     KMP(S, T);
     free(T);
     free(S);
