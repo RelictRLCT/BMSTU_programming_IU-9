@@ -13,55 +13,43 @@ bool ListEmpty(struct Elem* l)
     return (l->next==l) ? true : false;
 }
 
-int ListLength(struct Elem* l)
+void swap(struct Elem* a, struct Elem* b)
 {
-    int len=0;
-    struct Elem* x=l;
-    while(x->next!=l)
-    {
-        len+=1;
-        x=x->next;
-    }
-    return len;
-}
-
-void swap(struct Elem* x, struct Elem* m, struct Elem* l)
-{
-    struct Elem* ins=m;//перевязка элементов, где стоял m
-    m->next->prev=m->prev;
-    m->prev->next=m->next;
-
-    x->prev->next=ins;//вставка
-    ins->prev=x->prev;
-    x->prev=ins;
-    ins->next=x;
+    long int locv=a->v;
+    a->v=b->v;
+    b->v=locv;
 }
 
 void InsertSort(struct Elem* l, int len)
 {
     struct Elem* x=l;
     struct Elem* m=l;
-    bool swaped=false;
-    for(int i=1; i<len+1; ++i)
+    for(int i=1; i<len; ++i)
     {
-        swaped=false;
+        int count=0;
+        int countmin=0;
         x=l;
+        m=l;
+        long int min=2147483647;
         for(int j=0; j<i-1; ++j)
         {
             x=x->next;
         }
+        m=x->next;
+        while(m->next!=l)
+        {
+            count+=1;
+            if(m->v < min)
+            {
+                countmin=count;
+                min=m->v;
+            }
+            m=m->next;
+        }
         m=x;
-        while(x->prev->v!=-9909 and x->prev->v > m->v)
-        {
-            x=x->prev;
-            swaped=true;
-        }
-        if(swaped)
-        {
-            swap(x, m, l);
-        }
-        while(l->prev->v!=-9909)
-            l=l->next;
+        for(int j=0; j<countmin; ++j)
+            m=m->next;
+        if (x->v > m->v) swap(x, m);
     }
 }
 
@@ -96,9 +84,7 @@ int main(int argc, char* argv[])
     }
     l=l->next->next;
     InsertSort(l, n);
-    while(l->prev->v!=-9909)
-        l=l->next;
-    for(int i=0; i<n; ++i)
+    while(l->v!=-9909)
     {
         printf("%ld ", l->v);
         l=l->next;
