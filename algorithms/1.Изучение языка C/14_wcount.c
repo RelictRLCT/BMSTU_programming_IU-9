@@ -6,6 +6,8 @@
 
 int wcount(char *s)
 {
+    if (s[0]=='\0')
+        return 0;
     char c;
     c=s[0];
     int i=0;
@@ -13,7 +15,7 @@ int wcount(char *s)
     while(c!='\0' and i<1000)
     {
         if(c==' ' and i!=0 and s[i-1]!=' ')
-        count+=1;
+            count+=1;
         i+=1;
         c=s[i];
     }
