@@ -124,7 +124,7 @@ int main(int argc, char* argv[])
     int n;
     int ix=0;
     char X[15];
-    InitStack(&sta, 35000);
+    InitStack(&sta, 500000);
     char s[30];
     while(true)
     {
