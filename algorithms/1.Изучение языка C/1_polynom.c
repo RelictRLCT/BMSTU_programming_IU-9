@@ -32,10 +32,8 @@ int main(int argc, char* argv[])
         pow[i]=1;
         long int n1=n-i;
         while(n1!=1)
-            {
-                 pow[i]*=x0;
-                 n1-=1;
-            }
+            {pow[i]*=x0;
+            n1-=1;}
     }
     for (long int i=0; i<n; ++i)
     {
