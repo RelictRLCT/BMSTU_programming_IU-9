@@ -10,18 +10,6 @@ long int gcd (long int a, long int b)
     return llabs(b) ? gcd(llabs(b), llabs(a%b)) : llabs(a);
 }
 
-long int ggcd (int left, int right, long int* A)
-{
-    long int c=A[left];
-    if(left==right)
-        return llabs(A[left]);
-    while(right-left!=0)
-    {
-        c=gcd(c, A[left+1]);
-        left+=1;
-    }
-    return c;
-}
 
 void compute_log(int m, int* lg)
 {
