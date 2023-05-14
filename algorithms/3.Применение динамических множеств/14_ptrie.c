@@ -35,6 +35,21 @@ bool mapempty(struct ver t)
     return true;
 }
 
+void minus(struct ver* x)
+{
+    int i=0;
+    if(x!=NULL)
+    {
+        while(i<26)
+        {
+            minus(x->arcs[i]);
+            i+=1;
+        }
+        x->v-=1;
+    }
+}
+
+
 int Descend(struct ver* t, char* k, struct ver* x, int metka_i_d)
 {
     x=t;
@@ -47,13 +62,17 @@ int Descend(struct ver* t, char* k, struct ver* x, int metka_i_d)
         if(y==NULL)
             break;
         x=y;
-
-        x->v-=1;
-        if(x->v==0)
+        if(metka_i_d==1)
+            x->v+=1;
+        else
         {
-            liquid_bor(x);
-            par->arcs[(int)(k[i]-'a')]=NULL;
-            break;
+            x->v-=1;
+            if(x->v==0)
+            {
+                liquid_bor(x);
+                par->arcs[(int)(k[i]-'a')]=NULL;
+                break;
+            }
         }
         i+=1;
     }
