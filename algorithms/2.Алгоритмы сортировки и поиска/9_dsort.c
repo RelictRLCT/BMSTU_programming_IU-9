@@ -30,5 +30,6 @@ int main(int argc, char* argv[])
     char str[1000001];
     gets(str);
     Dissort(str, strlen(str));
+
     return 0;
 }
