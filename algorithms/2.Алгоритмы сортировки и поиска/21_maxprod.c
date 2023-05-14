@@ -42,7 +42,7 @@ int main(int argc, char* argv[])
     char c;
     int i=0;
     int ii=0;
-    char musor;//забирает энтер или пробел
+    char musor;
     scanf("%c", &musor);
     for(int j=0; j<n; ++j)
     {
