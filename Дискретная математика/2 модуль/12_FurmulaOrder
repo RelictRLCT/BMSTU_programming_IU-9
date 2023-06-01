@@ -1,0 +1,388 @@
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"sort"
+	"strings"
+	"time"
+)
+
+type Vertex struct {
+	formula string
+	left    []string
+	right   []string
+	vers    []*Vertex
+	number  int
+	mark    string
+}
+
+func Cycle(graph *[]Vertex) bool {
+	visited := make(map[*Vertex]bool)
+	recStack := make(map[*Vertex]bool)
+
+	for _, v := range *graph {
+		if Cyclerec(&v, visited, recStack) {
+			return true
+		}
+	}
+
+	return false
+}
+
+func Cyclerec(v *Vertex, visited, recStack map[*Vertex]bool) bool {
+	visited[v] = true
+	recStack[v] = true
+
+	for _, neighbor := range v.vers {
+		if !visited[neighbor] {
+			if Cyclerec(neighbor, visited, recStack) {
+				return true
+			}
+		} else if recStack[neighbor] {
+			return true
+		}
+	}
+
+	recStack[v] = false
+	return false
+}
+
+func parse_ravno(s string) bool {
+	ex_ravno := false
+	for len(s) != 0 {
+		if s[0] == '=' && ex_ravno {
+			return false
+		}
+		if s[0] == '=' {
+			ex_ravno = true
+		}
+		s = s[1:]
+	}
+	return ex_ravno
+}
+
+func parse_symbols(s string) bool {
+	for _, sym := range s {
+		if !((sym >= '0' && sym <= '9') ||
+			(sym >= 'a' && sym <= 'z') ||
+			(sym >= 'A' && sym <= 'Z') ||
+			sym == '+' || sym == '-' || sym == '*' || sym == '/' || sym == '(' || sym == ')' || sym == '.') {
+			return false
+		}
+	}
+	brackets := make([]int32, 0)
+	for _, ch := range s {
+		if ch == '(' {
+			brackets = append(brackets, ch)
+		} else if ch == ')' {
+			if len(brackets) == 0 || brackets[len(brackets)-1] != '(' {
+				return false
+			}
+			brackets = brackets[:len(brackets)-1]
+		}
+	}
+	if len(brackets) != 0 {
+		return false
+	}
+
+	return true
+}
+func parse_names(n []string) bool {
+	for i := 0; i < len(n); i++ {
+		if len(n[i]) == 0 || n[i][0] >= '0' && n[i][0] <= '9' {
+			return false
+		}
+		for j := 0; j < len(n[i]); j++ {
+			if !(n[i][j] >= 'a' && n[i][j] <= 'z') &&
+				!(n[i][j] >= 'A' && n[i][j] <= 'Z') &&
+				!(n[i][j] >= '0' && n[i][j] <= '9') {
+				return false
+			}
+		}
+	}
+	return true
+}
+
+func parse_exprs(e []string) bool {
+	ex_num := true
+	ex_sign := true
+	for i := 0; i < len(e); i++ {
+		if len(e[i]) == 0 || e[i][0] == '+' ||
+			e[i][0] == '*' || e[i][0] == '/' {
+			return false
+		}
+		for j := 0; j < len(e[i]); j++ {
+			if !(e[i][j] >= 'a' && e[i][j] <= 'z') &&
+				!(e[i][j] >= 'A' && e[i][j] <= 'Z') &&
+				!(e[i][j] >= '0' && e[i][j] <= '9') &&
+				!(e[i][j] == ' ') && !(e[i][j] == '*') &&
+				!(e[i][j] == '/') && !(e[i][j] == '+') && !(e[i][j] == '-') &&
+				!(e[i][j] == '(') && !(e[i][j] == ')') {
+				return false
+			}
+
+			if e[i][j] == '+' || e[i][j] == '-' ||
+				e[i][j] == '*' || e[i][j] == '/' {
+				ex_num = false
+				ex_sign = true
+			}
+
+			if e[i][j] == ')' && j < (len(e[i])-1) && e[i][j+1] != ')' {
+				ex_num = false
+				ex_sign = false
+			}
+
+			if e[i][j] == '(' {
+				ex_num = false
+			}
+
+			if (e[i][j] >= 'a' && e[i][j] <= 'z') ||
+				(e[i][j] >= 'A' && e[i][j] <= 'Z') ||
+				(e[i][j] >= '0' && e[i][j] <= '9') {
+				ex_num = true
+			}
+
+			if e[i][j] == ' ' && ex_num == true {
+				ex_sign = false
+			}
+
+			brackets := make([]int32, 0)
+			for _, ch := range e[i] {
+				if ch == '(' {
+					brackets = append(brackets, ch)
+				} else if ch == ')' {
+					if len(brackets) == 0 || brackets[len(brackets)-1] != '(' {
+						return false
+					}
+					brackets = brackets[:len(brackets)-1]
+				}
+			}
+			if len(brackets) != 0 {
+				return false
+			}
+		}
+	}
+	return ex_num && ex_sign
+}
+
+func parse_str(s string) (bool, []string, []string) {
+	if !parse_ravno(s) {
+		return false, nil, nil
+	}
+	parts := strings.Split(s, "=")
+	left := strings.TrimSpace(parts[0])
+	right := strings.TrimSpace(parts[1])
+
+	left_names := strings.Split(left, ",")
+	right_exprs := strings.Split(right, ",")
+	if len(left_names) != len(right_exprs) {
+		return false, nil, nil
+	}
+	for i := 0; i < len(left_names); i++ {
+		left_names[i] = strings.TrimSpace(left_names[i])
+	}
+
+	for i := 0; i < len(right_exprs); i++ {
+		right_exprs[i] = strings.TrimSpace(right_exprs[i])
+	}
+	if !parse_names(left_names) {
+		return false, nil, nil
+	}
+	if !parse_exprs(right_exprs) {
+		return false, nil, nil
+	}
+	return true, left_names, right_exprs
+}
+
+func parse_vars(s string) []string {
+	res := make([]string, 0)
+	word := ""
+	for _, sym := range s {
+		if (sym >= 'a' && sym <= 'z') ||
+			(sym >= 'A' && sym <= 'Z') ||
+			(sym >= '0' && sym <= '9' && word != "") {
+			word += string(sym)
+		} else {
+			if word != "" {
+				res = append(res, word)
+				word = ""
+			}
+		}
+	}
+	if word != "" {
+		res = append(res, word)
+	}
+	return res
+}
+
+func member(a []string, b string) bool {
+	for _, x := range a {
+		if x == b {
+			return true
+		}
+	}
+	return false
+}
+
+func done(names []string, exprs []string) bool {
+	notdonevar := make([]string, 0)
+	for i := 0; i < len(exprs); i++ {
+		vars := parse_vars(exprs[i])
+		for _, v := range vars {
+			if !member(notdonevar, v) {
+				notdonevar = append(notdonevar, v)
+			}
+		}
+	}
+	n_sort := make([]string, len(names))
+	v_sort := make([]string, len(notdonevar))
+	copy(n_sort, names)
+	copy(v_sort, notdonevar)
+	sort.Strings(n_sort)
+	sort.Strings(v_sort)
+	for i := 0; i < len(v_sort); i++ {
+		if !member(n_sort, v_sort[i]) {
+			return false
+		}
+	}
+	return true
+}
+
+func member_ver(vers []*Vertex, ver Vertex) bool {
+	for _, v := range vers {
+		if ver.left[0] == v.left[0] {
+			return true
+		}
+	}
+	return false
+}
+
+func graph(g *[]Vertex) {
+	for i := 0; i < len(*g); i++ {
+		for j := 0; j < len((*g)[i].right); j++ {
+			names := parse_vars((*g)[i].right[j])
+			for _, name := range names {
+				for k := 0; k < len(*g); k++ {
+					if member((*g)[k].left, name) {
+						if !member_ver((*g)[i].vers, (*g)[k]) {
+							(*g)[i].vers = append((*g)[i].vers, &(*g)[k])
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+func TopSort(g *[]Vertex) {
+	for i := 0; i < len(*g); i++ {
+		(*g)[i].mark = "white"
+	}
+	for i := 0; i < len(*g); i++ {
+		if (*g)[i].mark == "white" {
+			VisitVertex(g, &(*g)[i])
+		}
+	}
+}
+
+var number = 0
+
+func VisitVertex(g *[]Vertex, v *Vertex) {
+	v.mark = "gray"
+	for i := 0; i < len(v.vers); i++ {
+		if v.vers[i].mark == "white" {
+			VisitVertex(g, v.vers[i])
+		}
+	}
+	v.number = number
+	number += 1
+	v.mark = "black"
+}
+
+func main() {
+	in := bufio.NewScanner(os.Stdin)
+
+	stopCh := make(chan bool)
+
+	var strs []string
+
+	go func() {
+		for in.Scan() {
+			str := in.Text()
+			strs = append(strs, str)
+		}
+		stopCh <- true
+	}()
+
+	select {
+	case <-stopCh:
+	case <-time.After(3 * time.Second):
+	}
+
+	names := make([]string, 0)
+	exprs := make([]string, 0)
+
+	g := make([]Vertex, len(strs))
+
+	for i, str := range strs {
+		ok, name, expr := parse_str(str)
+		if !ok {
+			fmt.Println("syntax error")
+			os.Exit(0)
+		} else {
+			names = append(names, name...)
+			exprs = append(exprs, expr...)
+			g[i].left = name
+			g[i].right = expr
+		}
+	}
+
+	if !done(names, exprs) {
+		fmt.Println("syntax error")
+		os.Exit(0)
+	}
+
+	for i := 0; i < len(names); i++ {
+		for j := i + 1; j < len(names); j++ {
+			if names[i] == names[j] {
+				fmt.Println("syntax error")
+				os.Exit(0)
+			}
+		}
+	}
+
+	graph(&g)
+
+	if Cycle(&g) {
+		fmt.Println("cycle")
+		os.Exit(0)
+	}
+
+	TopSort(&g)
+
+	number = 0
+	for number != len(strs) {
+		for i := 0; i < len(g); i++ {
+			if g[i].number == number {
+				fmt.Print(g[i].left[0])
+				if len(g[i].left) > 0 {
+					for j := 1; j < len(g[i].left); j++ {
+						fmt.Print(", ", g[i].left[j])
+					}
+				}
+				fmt.Print(" = ")
+				fmt.Print(g[i].right[0])
+				if len(g[i].right) > 0 {
+					for j := 1; j < len(g[i].left); j++ {
+						fmt.Print(", ", g[i].right[j])
+					}
+				}
+				number += 1
+				fmt.Println()
+			}
+		}
+	}
+
+}
