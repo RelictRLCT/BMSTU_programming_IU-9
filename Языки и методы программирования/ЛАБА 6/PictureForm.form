@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="PictureForm">
+  <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="10" left="10" bottom="10" right="10"/>
+    <constraints>
+      <xy x="20" y="20" width="500" height="328"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <component id="457f9" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="33" height="133"/>
+          </grid>
+        </constraints>
+        <properties>
+          <text value="Высота"/>
+        </properties>
+      </component>
+      <component id="22ede" class="javax.swing.JSpinner" binding="highSpinner">
+        <constraints>
+          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="88" height="133"/>
+          </grid>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="e0705" class="CanvasPanel" binding="canvasPanel">
+        <constraints>
+          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <minimum-size width="100" height="100"/>
+            <preferred-size width="11000" height="1000"/>
+            <maximum-size width="1000" height="1000"/>
+          </grid>
+        </constraints>
+        <properties>
+          <foreground color="-1760214"/>
+        </properties>
+      </component>
+      <component id="ee862" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Диаметр"/>
+        </properties>
+      </component>
+      <component id="6f5a2" class="javax.swing.JSpinner" binding="diamSpinner">
+        <constraints>
+          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+      </component>
+    </children>
+  </grid>
+</form>
