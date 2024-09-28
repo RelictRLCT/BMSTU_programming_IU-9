@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math"
 	"math/rand"
+	"os"
 	"sync"
 	"time"
 )
@@ -52,12 +53,15 @@ func multipl_matrix_by_column(n int, m1 [][]int, m2 [][]int, res [][]int) {
 	}
 }
 
-func clear_matrix(res [][]int) {
-	for i := 0; i < len(res); i++ {
-		for j := 0; j < len(res[i]); j++ {
-			res[i][j] = 0
+func compare_matrix(res1, res2 [][]int) bool {
+	for i := 0; i < len(res1); i++ {
+		for j := 0; j < len(res1[i]); j++ {
+			if res1[i][j] != res2[i][j] {
+				return false
+			}
 		}
 	}
+	return true
 }
 
 func multipl_matrix_with_go(n int, m1 [][]int, m2 [][]int, res [][]int, count_of_squares int) {
@@ -87,15 +91,19 @@ func multipl_matrix_with_go(n int, m1 [][]int, m2 [][]int, res [][]int, count_of
 }
 
 func main() {
-	n := 2000
+	n := 1000
 	m1 := make([][]int, n)
 	m2 := make([][]int, n)
-	res := make([][]int, n)
+	res1 := make([][]int, n)
+	res2 := make([][]int, n)
+	res_par := make([][]int, n)
 
 	for i := 0; i < n; i++ {
 		m1[i] = make([]int, n)
 		m2[i] = make([]int, n)
-		res[i] = make([]int, n)
+		res1[i] = make([]int, n)
+		res2[i] = make([]int, n)
+		res_par[i] = make([]int, n)
 	}
 
 	for i := 0; i < n; i++ {
@@ -105,25 +113,33 @@ func main() {
 		}
 	}
 
-	//start := time.Now()
-	//multipl_matrix_by_row(n, m1, m2, res)
-	//end := time.Now()
-	//fmt.Println("По строкам :", end.Sub(start).Seconds())
-	//
-	////print_matrixs(n, m1, m2, res)
-	//clear_matrix(res)
-	//
-	//start = time.Now()
-	//multipl_matrix_by_column(n, m1, m2, res)
-	//end = time.Now()
-	//fmt.Println("По столбцам: ", end.Sub(start).Seconds())
-
-	//print_matrixs(n, m1, m2, res)
-	clear_matrix(res)
 	start := time.Now()
-	multipl_matrix_with_go(n, m1, m2, res, 36)
+	multipl_matrix_by_row(n, m1, m2, res1)
 	end := time.Now()
-	fmt.Println("Параллельно :", end.Sub(start).Seconds())
-	//print_matrixs(n, m1, m2, res)
+	fmt.Println("По строкам :", end.Sub(start).Seconds(), "секунд")
+
+	//print_matrixs(n, m1, m2, res1)
+
+	start = time.Now()
+	multipl_matrix_by_column(n, m1, m2, res2)
+	end = time.Now()
+	fmt.Println("По столбцам: ", end.Sub(start).Seconds(), "секунд")
+
+	//print_matrixs(n, m1, m2, res2)
+
+	if !compare_matrix(res1, res2) {
+		println("Матрицы не равны")
+		os.Exit(1)
+	}
+
+	start = time.Now()
+	multipl_matrix_with_go(n, m1, m2, res_par, 9)
+	end = time.Now()
+	fmt.Println("Параллельно :", end.Sub(start).Seconds(), "секунд")
+	//print_matrixs(n, m1, m2, res_par)
+
+	if compare_matrix(res1, res_par) {
+		println("Матрицы равны")
+	}
 
 }
