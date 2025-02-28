@@ -1,9 +1,0 @@
-lazy val arith: (Int => Boolean) => (Int, Int, Int) => List[Int] =
-     |         pred => {
-     |           case (a0, d, n) if n <= 0 => Nil
-     |           case (a0, d, n) if pred(a0) =>
-     |             a0 :: arith(pred)(a0 + d, d, n - 1)
-     |           case (a0, d, n) =>
-     |             arith(pred)(a0 + d, d, n)
-     |         }
-     | 
