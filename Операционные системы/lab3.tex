@@ -1,0 +1,473 @@
+\documentclass[a4paper, 14pt]{extarticle}
+
+ 
+% Поля
+%--------------------------------------
+\usepackage{minted}
+\usepackage{xcolor}
+\usepackage{geometry}
+\usepackage{float}
+\geometry{a4paper,tmargin=2cm,bmargin=2cm,lmargin=3cm,rmargin=1cm}
+%--------------------------------------
+
+
+%Russian-specific packages
+%--------------------------------------
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc} 
+\usepackage[english, main=russian]{babel}
+%--------------------------------------
+
+\usepackage{textcomp}
+
+% Красная строка
+%--------------------------------------
+\usepackage{indentfirst}               
+%--------------------------------------             
+
+
+%Graphics
+%--------------------------------------
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+\usepackage{wrapfig}
+%--------------------------------------
+
+% Полуторный интервал
+%--------------------------------------
+\linespread{1.3}                    
+%--------------------------------------
+
+%Выравнивание и переносы
+%--------------------------------------
+% Избавляемся от переполнений
+\sloppy
+% Запрещаем разрыв страницы после первой строки абзаца
+\clubpenalty=10000
+% Запрещаем разрыв страницы после последней строки абзаца
+\widowpenalty=10000
+%--------------------------------------
+
+%Списки
+\usepackage{enumitem}
+
+%Подписи
+\usepackage{caption} 
+
+%Гиперссылки
+\usepackage{hyperref}
+
+\hypersetup {
+	unicode=true
+}
+
+%Рисунки
+%--------------------------------------
+\DeclareCaptionLabelSeparator*{emdash}{~--- }
+\captionsetup[figure]{labelsep=emdash,font=onehalfspacing,position=bottom}
+%--------------------------------------
+
+\usepackage{tempora}
+\usepackage{amsmath}
+\usepackage{color}
+\usepackage{listings}
+\lstset{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=L,
+  xleftmargin=\parindent,
+  language=C++,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{blue},
+  commentstyle=\itshape\color{purple},
+  identifierstyle=\color{black},
+  stringstyle=\color{red},
+  extendedchars=\true,
+}
+
+%--------------------------------------
+%			НАЧАЛО ДОКУМЕНТА
+%--------------------------------------
+
+\begin{document}
+
+%--------------------------------------
+%			ТИТУЛЬНЫЙ ЛИСТ
+%--------------------------------------
+\begin{titlepage}
+\thispagestyle{empty}
+\newpage
+
+
+%Шапка титульного листа
+%--------------------------------------
+\vspace*{-60pt}
+\hspace{-65pt}
+\begin{minipage}{0.3\textwidth}
+\hspace*{-20pt}\centering
+\includegraphics[width=\textwidth]{emblem.png}
+\end{minipage}
+\begin{minipage}{0.67\textwidth}\small \textbf{
+\vspace*{-0.7ex}
+\hspace*{-6pt}\centerline{Министерство науки и высшего образования Российской Федерации}
+\vspace*{-0.7ex}
+\centerline{Федеральное государственное бюджетное образовательное учреждение }
+\vspace*{-0.7ex}
+\centerline{высшего образования}
+\vspace*{-0.7ex}
+\centerline{<<Московский государственный технический университет}
+\vspace*{-0.7ex}
+\centerline{имени Н.Э. Баумана}
+\vspace*{-0.7ex}
+\centerline{(национальный исследовательский университет)>>}
+\vspace*{-0.7ex}
+\centerline{(МГТУ им. Н.Э. Баумана)}}
+\end{minipage}
+%--------------------------------------
+
+%Полосы
+%--------------------------------------
+\vspace{-25pt}
+\hspace{-35pt}\rule{\textwidth}{2.3pt}
+
+\vspace*{-20.3pt}
+\hspace{-35pt}\rule{\textwidth}{0.4pt}
+%--------------------------------------
+
+\vspace{1.5ex}
+\hspace{-35pt} \noindent \small ФАКУЛЬТЕТ\hspace{80pt} <<Информатика и системы управления>>
+
+\vspace*{-16pt}
+\hspace{47pt}\rule{0.83\textwidth}{0.4pt}
+
+\vspace{0.5ex}
+\hspace{-35pt} \noindent \small КАФЕДРА\hspace{50pt} <<Теоретическая информатика и компьютерные технологии>>
+
+\vspace*{-16pt}
+\hspace{30pt}\rule{0.866\textwidth}{0.4pt}
+  
+\vspace{11em}
+
+\begin{center}
+\Large {\bf Лабораторная работа № 3} \\ 
+\large {\bf по курсу <<Операционные системы>>} \\ 
+{СПИСОК ПРОЦЕССОВ В СИСТЕМЕ} \\
+\end{center}\normalsize
+
+\vspace{8em}
+
+
+\begin{flushright}
+  {Студент группы ИУ9-42Б Нащекин Н. Д.\hspace*{15pt} \\
+  \vspace{2ex}
+  Преподаватель: Брагин А. В.\hspace*{15pt}}
+\end{flushright}
+
+\bigskip
+
+\vfill
+ 
+
+\begin{center}
+\textsl{Москва, 2024}
+\end{center}
+\end{titlepage}
+%--------------------------------------
+%		КОНЕЦ ТИТУЛЬНОГО ЛИСТА
+%--------------------------------------
+
+\renewcommand{\ttdefault}{pcr}
+
+\setlength{\tabcolsep}{3pt}
+\newpage
+\setcounter{page}{2}
+
+\section{Содержание}
+\begin{flushleft}
+3 - \hyperref[sec:Goal]{Цель}\newline
+4 - \hyperref[sec:ToDo]{Постановка задачи}\newline
+6 - \hyperref[sec:Realization]{Практическая реализация}\newline
+10 - \hyperref[sec:Results]{Результаты}\newline
+11 - \hyperref[sec:Conclusion]{Выводы}\newline
+12 - \hyperref[sec:Literature]{Список литературы}\newline
+\end{flushleft}
+\pagebreak
+
+\section{Цель} \label{sec:Goal}
+\begin{flushleft}
+Разработать загружаемые модули ядра (драйвера) для
+операционных систем Windows / ReactOS и NetBSD, которые выводят в
+отладочный журнал список всех процессов в системе.
+
+\end{flushleft}
+\pagebreak
+
+\section{Постановка задачи} \label{sec:ToDo}
+\begin{flushleft}
+ЧАСТЬ 1. ВЫВОД СПИСКА ПРОЦЕССОВ ИЗ ДРАЙВЕРА В REACTOS \newline \newline
+На основе драйвера из лабораторной работы № 2 создать новый драйвер,
+который выводит в отладочный лог список процессов в системе, используя API
+ядра. Список должен состоять из имени процесса (имя образа – Image Name),
+идентификатора процесса (PID) и идентификатора родительского процесса.
+Драйвер должен загружаться и выгружаться по требованию так, чтобы
+можно было проверить соответствие списка процессов, выведенного драйвером
+и с помощью утилиты Task Manager (taskmgr.exe).\newline
+Получение информации о использованием процессах из ядра осуществить API с функции
+ZwQuerySystemInformation(SystemProcessInformation,…).
+Выделение и
+освобождение памяти для информации о процессах реализовать используя API
+функции ExAllocatePool(PagedPool,…) и ExFreePool(). Предусмотреть ситуацию,
+в которой запрошенный необходимый размер буфера для информации о
+процессах
+может
+измениться
+в
+большую сторону
+между
+вызовами ZwQuerySystemInformation и в этом случае произвести новое выделение памяти
+с освобождением старого буфера.\newline
+
+ЧАСТЬ 2. ВЫВОД СПИСКА ПРОЦЕССОВ ИЗ ДРАЙВЕРА В NETBSD \newline \newline
+На основе драйвера из лабораторной работы № 2 создать новый драйвер,
+который выводит в отладочный лог список процессов в системе, используя API
+ядра. Список должен состоять из имени процесса (имя образа – Image Name),
+идентификатора процесса (PID) и идентификатора родительского процесса. \newline
+Драйвер должен загружаться и выгружаться по требованию так, чтобы
+можно было проверить соответствие списка процессов, выведенного драйвером
+и с помощью утилиты ps. \newline
+Получение информации о процессах из ядра осуществить используя
+глобальную переменную allproc. Для этого необходимо включить заголовочные
+файлы:\newline
+
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,fontsize=\footnotesize,linenos]{cpp}
+#include <sys/module.h>
+#include <sys/kernel.h>
+#include <sys/proc.h>
+\end{minted}
+
+\end{flushleft}
+\pagebreak
+
+\section{Практическая реализация} \label{sec:Realization}
+\begin{flushleft}
+ЧАСТЬ 1 \newline
+Аналогично лабораторной работе 2, в скачанном ранее каталоге с исходным кодом ReactOS[1] в папке reactos/drivers я создал папку lab3\char`_ driver. В drivers/CMakeLists.txt добавил строку 
+\end{flushleft}
+
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,fontsize=\footnotesize,linenos]{cpp}
+add_subdirectory(lab3_driver)
+\end{minted}
+
+\begin{flushleft}
+ для того, чтобы мой драйвер участвовал в сборке
+системы. В папке drivers/lab3\char`_ driver были созданы три файла: CMakeLists.txt, lab3\char`_ driver.c и lab3\char`_ driver.rc. Содержимое этих файлов было создано на основе моего драйвера из прошлой лабораторной. Содержимое CMakeLists.txt:
+\end{flushleft}
+
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,fontsize=\footnotesize,linenos]{cpp}
+add_library(lab3_driver MODULE lab3_driver.c lab3_driver.rc)
+set_module_type(lab3_driver kernelmodedriver)
+add_importlibs(lab3_driver ntoskrnl)
+add_cd_file(TARGET lab3_driver DESTINATION reactos/system32/drivers FOR all)
+\end{minted}
+
+\begin{flushleft}
+В основном файле выделяется 32 килобайта паймяти под массив, в котором будут хранится структуры, описывающие процесс. Затем, после выполнения функции ZwQuerySystemInformation[2], если размера буфера не хватает, он увеличивается в 8 раз. После этого программа проходит по полученному массиву структур и для каждого процесса выводит информацию о нём в лог системы.
+lab3\char`_ driver.c:[3],[4]
+\end{flushleft}
+
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,fontsize=\footnotesize,linenos]{cpp}
+#include <ntddk.h>
+#include <debug.h>
+#include <ntifs.h>
+#include <ndk/exfuncs.h>
+#include <ndk/ketypes.h>
+#include <ntstrsafe.h>
+
+static DRIVER_UNLOAD DriverUnload;
+static VOID NTAPI
+DriverUnload(IN PDRIVER_OBJECT DriverObject)
+{
+    IoDeleteDevice(DriverObject->DeviceObject);
+	DPRINT1("NASHCHEKIN NIKITA'S Driver unloaded\n");
+}
+
+NTSTATUS NTAPI DriverEntry(IN PDRIVER_OBJECT DriverObject,
+            IN PUNICODE_STRING RegistryPath) {
+    /* For non-used parameter */
+    UNREFERENCED_PARAMETER(RegistryPath);
+    
+    /* Setup the Driver Object */
+    DriverObject->DriverUnload = DriverUnload;
+
+	///Основная функция 
+    DPRINT1("NASHCHEKIN NIKITA!!! From second driver\n");
+    
+    ULONG return_length = 1024*32;
+    PVOID pBuffer = ExAllocatePool(NonPagedPool, return_length);
+    NTSTATUS status;
+    
+    if (pBuffer == NULL) {
+    	DPRINT1("Ошибка при выделении памяти\n");
+    	goto end;
+    } 
+   
+    status = ZwQuerySystemInformation(SystemProcessInformation, pBuffer, return_length, &return_length);
+    
+    if (!NT_SUCCESS(status)) {
+    	DPRINT1("Ошибка при выполнении ZwQuery...\n");
+    	goto end;
+    }
+    
+    while (ZwQuerySystemInformation(SystemProcessInformation, pBuffer, return_length, &return_length) == STATUS_INFO_LENGTH_MISMATCH) {
+    	ExFreePool(pBuffer);
+    	return_length = return_length * 8;
+    	pBuffer = ExAllocatePool(NonPagedPool, return_length);
+    }
+    
+    PSYSTEM_PROCESS_INFORMATION process_info = (PSYSTEM_PROCESS_INFORMATION)pBuffer;
+    
+    while (process_info) {
+    	DPRINT1("Имя процесса: %.*ls, ", process_info->ImageName.Length / sizeof(WCHAR), process_info->ImageName.Buffer);
+    	
+    	DPRINT1("PID: %lu, ", (ULONG)process_info->UniqueProcessId);
+    	
+    	DPRINT1("Родительский процесс: %lu\n", (ULONG)process_info->InheritedFromUniqueProcessId);
+    	
+    	if (process_info->NextEntryOffset == 0) {
+            break;
+        }
+
+        process_info = (PSYSTEM_PROCESS_INFORMATION)((PUCHAR)process_info +
+         process_info->NextEntryOffset);
+    }
+    
+    end:
+    
+    /* Return success. */
+    return STATUS_SUCCESS;
+}
+\end{minted}
+
+\begin{flushleft}
+lab3\char`_ driver.rc:
+\end{flushleft}
+
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,fontsize=\footnotesize,linenos]{cpp}
+#define REACTOS_VERSION_DLL
+#define REACTOS_STR_FILE_DESCRIPTION  "my second driver"
+#define REACTOS_STR_INTERNAL_NAME     "lab3_driver"
+#define REACTOS_STR_ORIGINAL_FILENAME "lab3_driver.sys"
+#include <reactos/version.rc>
+\end{minted}
+
+\begin{flushleft}
+Далее в среде сборки был пересобран образ, а затем переустановлена система. В работающей системе были выполнены команды:
+\end{flushleft}
+
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,fontsize=\footnotesize,linenos ,escapeinside=||]{cpp}
+
+sc create lab3driver binPath=C:|\textbackslash|ReactOS|\textbackslash|system32|\textbackslash|drivers|\textbackslash|lab3_driver.sys type= kernel
+sc start lab3driver
+
+\end{minted}
+
+\begin{flushleft}
+В логи был выведен список процессов, запущенных в системе. Для каждого процесса было напечатано его название, process ID и process ID родительского процесса. Содержимое этого списка аналогично списку, предоставляемому программой taskmgr.exe \newline \newline
+ЧАСТЬ 2 \newline
+Как и в предыдущей лабораторной, сначала был создан файл /usr/src/sys/dev/lab3.c и добавлена реализация драйвера:[5]
+\end{flushleft}
+
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,fontsize=\footnotesize,linenos]{cpp}
+#include <sys/module.h>
+MODULE(MODULE_CLASS_MISC, lab3, NULL);
+
+static int lab3_modcmd(modcmd_t cmd, void* arg) {
+	printf("NASHCHEKIN NIKITA From second NetBSD driver!!!");
+	
+	struct proc *process;
+	
+	PROCLIST_FOREACH(process, &allproc) {
+			printf("Process name: %s, ", process->p_comm);
+			printf("PID: %d, ", process->p_pid);
+			printf("Process parent: %d\n", process->p_ppid);
+	}
+	
+	return 0;
+}
+\end{minted}
+
+\begin{flushleft}
+Далее был создан файл /usr/src/sys/modules/lab3/Makefile со следующим содержимым:
+\end{flushleft}
+
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,fontsize=\footnotesize,linenos ,escapeinside=||]{cpp}
+.include "../Makefile.inc"
+KMOD=lab3
+.PATH: |\textdollar|{S}/dev
+SRCS=lab3.c
+.include <bsd.kmodule.mk>
+\end{minted}
+
+\begin{flushleft}
+Затем была выполнена команда make и modload ./lab3.kmod \newline
+В логи был выведен список всех процессов системы.
+\end{flushleft}
+\pagebreak
+
+\section{Результаты} \label{sec:Results}
+\begin{flushleft}
+Были реализованы драйверы, выводящие список системных процессов в лог при их запуске на операционных системах ReactOS и NetBSD. 
+
+\begin{figure}[H]
+
+\centering
+
+\includegraphics[width=0.8\linewidth]{1.png}
+
+\caption{Скриншот 1}
+
+\label{fig:mpr}
+
+\end{figure}
+
+\begin{figure}[H]
+
+\centering
+
+\includegraphics[width=0.8\linewidth]{2.png}
+
+\caption{Скриншот 2}
+
+\label{fig:mpr}
+
+\end{figure}
+
+\begin{figure}[H]
+
+\centering
+
+\includegraphics[width=0.8\linewidth]{3.png}
+
+\caption{Скриншот 3}
+
+\label{fig:mpr}
+
+\end{figure}
+
+\end{flushleft}
+\pagebreak 
+
+\section{Выводы} \label{sec:Conclusion}
+Выполнив данную лабораторную работу, я разработал два драйвера для ReactOS и NetBSD. На ReactOS список, выводимый моим драйвером, аналогичен списку, который предоставляет утилита taskmgr.exe. На NetBSD мой драйвер выводит даже больше процессов, чем утилита ps. Видимо, ps, вызываемая без аргументов, не отображает некоторые системные процессы. Как и в предыдущей лабораторной, на NetBSD разработка драйвера оказалась проще благодаря готовому макросу PROCLIST\char`_ FOREACH, производящему удобный перебор всех процессов в передаваемом списке, и глобальной переменной allproc, которая сразу хранит в себе информацию обо всех системных процессах.
+\pagebreak
+
+\section{Список литературы} \label{sec:Literature}
+\begin{flushleft}
+[1] - https://reactos.org/wiki/Building\char`_ ReactOS\newline
+[2] - https://cpp.hotexamples.com/examples/-/-/ZwQuerySystemInformation/cpp-zwquerysysteminformation-function-examples.html\newline
+[3] - https://reactos.org/forum/viewtopic.php?t=16944\newline
+[4] - https://learn.microsoft.com/en-us/windows/win32/sysinfo/zwquerysysteminformation\newline
+[5] - https://ftp.netbsd.org/pub/NetBSD/NetBSD-current/src/sys/sys/proc.h
+\end{flushleft}
+\end{document}

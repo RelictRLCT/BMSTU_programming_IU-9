@@ -1,0 +1,381 @@
+\documentclass[a4paper, 14pt]{extarticle}
+
+ 
+% Поля
+%--------------------------------------
+\usepackage{minted}
+\usepackage{xcolor}
+\usepackage{geometry}
+\usepackage{float}
+\geometry{a4paper,tmargin=2cm,bmargin=2cm,lmargin=3cm,rmargin=1cm}
+%--------------------------------------
+
+
+%Russian-specific packages
+%--------------------------------------
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc} 
+\usepackage[english, main=russian]{babel}
+%--------------------------------------
+
+\usepackage{textcomp}
+
+% Красная строка
+%--------------------------------------
+\usepackage{indentfirst}               
+%--------------------------------------             
+
+
+%Graphics
+%--------------------------------------
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+\usepackage{wrapfig}
+%--------------------------------------
+
+% Полуторный интервал
+%--------------------------------------
+\linespread{1.3}                    
+%--------------------------------------
+
+%Выравнивание и переносы
+%--------------------------------------
+% Избавляемся от переполнений
+\sloppy
+% Запрещаем разрыв страницы после первой строки абзаца
+\clubpenalty=10000
+% Запрещаем разрыв страницы после последней строки абзаца
+\widowpenalty=10000
+%--------------------------------------
+
+%Списки
+\usepackage{enumitem}
+
+%Подписи
+\usepackage{caption} 
+
+%Гиперссылки
+\usepackage{hyperref}
+
+\hypersetup {
+	unicode=true
+}
+
+%Рисунки
+%--------------------------------------
+\DeclareCaptionLabelSeparator*{emdash}{~--- }
+\captionsetup[figure]{labelsep=emdash,font=onehalfspacing,position=bottom}
+%--------------------------------------
+
+\usepackage{tempora}
+\usepackage{amsmath}
+\usepackage{color}
+\usepackage{listings}
+\lstset{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=L,
+  xleftmargin=\parindent,
+  language=C++,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{blue},
+  commentstyle=\itshape\color{purple},
+  identifierstyle=\color{black},
+  stringstyle=\color{red},
+  extendedchars=\true,
+}
+
+%--------------------------------------
+%			НАЧАЛО ДОКУМЕНТА
+%--------------------------------------
+
+\begin{document}
+
+%--------------------------------------
+%			ТИТУЛЬНЫЙ ЛИСТ
+%--------------------------------------
+\begin{titlepage}
+\thispagestyle{empty}
+\newpage
+
+
+%Шапка титульного листа
+%--------------------------------------
+\vspace*{-60pt}
+\hspace{-65pt}
+\begin{minipage}{0.3\textwidth}
+\hspace*{-20pt}\centering
+\includegraphics[width=\textwidth]{emblem.png}
+\end{minipage}
+\begin{minipage}{0.67\textwidth}\small \textbf{
+\vspace*{-0.7ex}
+\hspace*{-6pt}\centerline{Министерство науки и высшего образования Российской Федерации}
+\vspace*{-0.7ex}
+\centerline{Федеральное государственное бюджетное образовательное учреждение }
+\vspace*{-0.7ex}
+\centerline{высшего образования}
+\vspace*{-0.7ex}
+\centerline{<<Московский государственный технический университет}
+\vspace*{-0.7ex}
+\centerline{имени Н.Э. Баумана}
+\vspace*{-0.7ex}
+\centerline{(национальный исследовательский университет)>>}
+\vspace*{-0.7ex}
+\centerline{(МГТУ им. Н.Э. Баумана)}}
+\end{minipage}
+%--------------------------------------
+
+%Полосы
+%--------------------------------------
+\vspace{-25pt}
+\hspace{-35pt}\rule{\textwidth}{2.3pt}
+
+\vspace*{-20.3pt}
+\hspace{-35pt}\rule{\textwidth}{0.4pt}
+%--------------------------------------
+
+\vspace{1.5ex}
+\hspace{-35pt} \noindent \small ФАКУЛЬТЕТ\hspace{80pt} <<Информатика и системы управления>>
+
+\vspace*{-16pt}
+\hspace{47pt}\rule{0.83\textwidth}{0.4pt}
+
+\vspace{0.5ex}
+\hspace{-35pt} \noindent \small КАФЕДРА\hspace{50pt} <<Теоретическая информатика и компьютерные технологии>>
+
+\vspace*{-16pt}
+\hspace{30pt}\rule{0.866\textwidth}{0.4pt}
+  
+\vspace{11em}
+
+\begin{center}
+\Large {\bf Лабораторная работа № 2} \\ 
+\large {\bf по курсу <<Операционные системы>>} \\ 
+{ЗАГРУЖАЕМЫЙ МОДУЛЬ ЯДРА (ДРАЙВЕР)} \\
+\end{center}\normalsize
+
+\vspace{8em}
+
+
+\begin{flushright}
+  {Студент группы ИУ9-42Б Нащекин Н. Д.\hspace*{15pt} \\
+  \vspace{2ex}
+  Преподаватель: Брагин А. В.\hspace*{15pt}}
+\end{flushright}
+
+\bigskip
+
+\vfill
+ 
+
+\begin{center}
+\textsl{Москва, 2024}
+\end{center}
+\end{titlepage}
+%--------------------------------------
+%		КОНЕЦ ТИТУЛЬНОГО ЛИСТА
+%--------------------------------------
+
+\renewcommand{\ttdefault}{pcr}
+
+\setlength{\tabcolsep}{3pt}
+\newpage
+\setcounter{page}{2}
+
+\section{Содержание}
+\begin{flushleft}
+3 - Цель \newline
+4 - Постановка задачи \newline
+5 - Практическая реализация \newline
+7 - Результаты \newline
+8 - Выводы \newline
+9 - Список литературы \newline
+\end{flushleft}
+\pagebreak
+
+\section{Цель}
+\begin{flushleft}
+Разработать простой загружаемый модуль ядра (драйвер),
+который выводит в отладочный журнал фамилию студента, выполнившего
+работу. Драйвер должен компилироваться в отдельный файл, а не быть частью
+ядра.
+
+\end{flushleft}
+\pagebreak
+
+\section{Постановка задачи}
+\begin{flushleft}
+ЧАСТЬ 1. ДРАЙВЕР В REACTOS \newline
+В созданном в лабораторной работе № 1 рабочем дереве операционной
+системы ReactOS создать новый модуль, реализующий простейший драйвер,
+совместимый с операционными системами Windows NT / ReactOS. Драйвер
+должен реализовать минимальный набор функций, необходимый для загрузки и
+выгрузки этого драйвера. В функции инициализации этого драйвера DriverEntry() осуществить вывод в отладочный лог используя макрос DPRINT1()
+фамилию студента, выполнившего работу. \newline
+
+ЧАСТЬ 2. ДРАЙВЕР В NETBSD \newline
+В виртуальной машине с NetBSD, созданной в лабораторной работе № 1,
+создать новый загружаемый модуль ядра (loadable kernel module), реализующий
+простейший драйвер. Драйвер должен соедржать минимальный набор функций,
+необходимый для загрузки и выгрузки этого драйвера. В функции инициализации этого драйвера осуществить вывод в отладочный лог фамилию
+студента, выполнившего работу.
+
+\end{flushleft}
+\pagebreak
+
+\section{Практическая реализация}
+\begin{flushleft}
+ЧАСТЬ 1 \newline
+В скачанном ранее каталоге с исходным кодом ReactOS[1] в папке reactos/drivers я создал папку lab2\char`_ driver. В drivers/CMakeLists.txt добавил строку add\char`_ subdirectory(lab2\char`_ driver) для того, чтобы мой драйвер участвовал в сборке
+системы. В папке drivers/lab2\char`_ driver были созданы три файла: CMakeLists.txt, lab2\char`_ driver.c и lab2\char`_ driver.rc. Содержимое этих файлов было создано на основе уже существующих драйверов. Содержимое CMakeLists.txt:
+\end{flushleft}
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,fontsize=\footnotesize,linenos]{cpp}
+add_library(lab2_driver MODULE lab2_driver.c lab2_driver.rc)
+set_module_type(lab2_driver kernelmodedriver)
+add_importlibs(lab2_driver ntoskrnl)
+add_cd_file(TARGET lab2_driver DESTINATION reactos/system32/drivers FOR all)
+\end{minted}
+
+\begin{flushleft}
+lab2\char`_ driver.c:[2]
+\end{flushleft}
+
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,fontsize=\footnotesize,linenos]{cpp}
+#include <ntddk.h>
+#include <debug.h>
+
+
+static DRIVER_UNLOAD DriverUnload;
+static VOID NTAPI
+DriverUnload(IN PDRIVER_OBJECT DriverObject)
+{
+    IoDeleteDevice(DriverObject->DeviceObject);
+	DPRINT1("NASHCHEKIN NIKITA'S Driver unloaded\n");
+}
+
+NTSTATUS NTAPI DriverEntry(IN PDRIVER_OBJECT DriverObject,
+            IN PUNICODE_STRING RegistryPath) {
+    /* For non-used parameter */
+    UNREFERENCED_PARAMETER(RegistryPath);
+    
+    /* Setup the Driver Object */
+    DriverObject->DriverUnload = DriverUnload;
+
+    DPRINT1("NASHCHEKIN NIKITA!!! From driver\n");
+    
+    /* Return success. */
+    return STATUS_SUCCESS;
+}
+\end{minted}
+
+\begin{flushleft}
+lab2\char`_ driver.rc:
+\end{flushleft}
+
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,fontsize=\footnotesize,linenos]{cpp}
+#define REACTOS_VERSION_DLL
+#define REACTOS_STR_FILE_DESCRIPTION  "my driver"
+#define REACTOS_STR_INTERNAL_NAME     "lab2_driver"
+#define REACTOS_STR_ORIGINAL_FILENAME "lab2_driver.sys"
+#include <reactos/version.rc>
+\end{minted}
+
+\begin{flushleft}
+Далее в среде сборки был пересобран образ, а затем переустановлена система. В работающей системе были выполнены команды:
+\end{flushleft}
+
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,fontsize=\footnotesize,linenos ,escapeinside=||]{cpp}
+
+sc create lab2driver binPath=C:|\textbackslash|ReactOS|\textbackslash|system32|\textbackslash|drivers|\textbackslash|lab2_driver.sys type= kernel
+sc start lab2driver
+
+\end{minted}
+
+\begin{flushleft}
+В логи вывелись мои фамилия и имя. \newline
+ЧАСТЬ 2 \newline
+Сначала был создан файл /usr/src/sys/dev/lab2.c и добавлена реализация драйвера:
+\end{flushleft}
+
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,fontsize=\footnotesize,linenos]{cpp}
+#include <sys/module.h>
+MODULE(MODULE_CLASS_MISC, lab2, NULL);
+
+static int lab2_modcmd(modcmd_t cmd, void* arg) {
+	printf("NASHCHEKIN NIKITA From NetBSD driver!!!");
+	return 0;
+}
+\end{minted}
+
+\begin{flushleft}
+Далее был создан файл /usr/src/sys/modules/lab2/Makefile со следующим содержимым:
+\end{flushleft}
+
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,fontsize=\footnotesize,linenos ,escapeinside=||]{cpp}
+.include "../Makefile.inc"
+KMOD=lab2
+.PATH: |\textdollar|{S}/dev
+SRCS=lab2.c
+.include <bsd.kmodule.mk>
+\end{minted}
+
+\begin{flushleft}
+Затем была выполнена команда make и modload ./lab2.kmod \newline
+В логи вывелись мои фамилия и имя.
+\end{flushleft}
+\pagebreak
+
+\section{Результаты}
+\begin{flushleft}
+Были реализованы простейшие драйверы, выводящие мои фамилию и имя в лог при их запуске на операционных системах ReactOS и NetBSD. 
+
+\begin{figure}[H]
+
+\centering
+
+\includegraphics[width=0.8\linewidth]{1.png}
+
+\caption{Скриншот 1}
+
+\label{fig:mpr}
+
+\end{figure}
+
+\begin{figure}[H]
+
+\centering
+
+\includegraphics[width=0.8\linewidth]{2.png}
+
+\caption{Скриншот 2}
+
+\label{fig:mpr}
+
+\end{figure}
+
+\begin{figure}[H]
+
+\centering
+
+\includegraphics[width=0.8\linewidth]{3.png}
+
+\caption{Скриншот 3}
+
+\label{fig:mpr}
+
+\end{figure}
+
+\end{flushleft}
+\pagebreak 
+
+\section{Выводы}
+Выполнив эту лабораторную работу, я разработал два простых драйвера для ReactOS и NetBSD. Создание драйвера для ReactOS было осложнено необходимостью настройки CMakeLists.txt и lab2\char`_ driver.rc, а также тем, что необходимо полностью пересобрать ядро и переустановить систему. На NetBSD можно скомпилировать только драйвер изнутри системы и сразу его запустить без переустановки.
+\pagebreak
+
+\section{Список литературы}
+\begin{flushleft}
+[1] - https://reactos.org/wiki/Building\char`_ ReactOS\newline
+[2] - https://reactos.org/forum/viewtopic.php?t=16944\newline
+\end{flushleft}
+\end{document}

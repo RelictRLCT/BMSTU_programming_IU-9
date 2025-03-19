@@ -1,0 +1,414 @@
+\documentclass[a4paper, 14pt]{extarticle}
+
+ 
+% Поля
+%--------------------------------------
+\usepackage{minted}
+\usepackage{xcolor}
+\usepackage{geometry}
+\usepackage{float}
+\geometry{a4paper,tmargin=2cm,bmargin=2cm,lmargin=3cm,rmargin=1cm}
+%--------------------------------------
+
+
+%Russian-specific packages
+%--------------------------------------
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc} 
+\usepackage[english, main=russian]{babel}
+%--------------------------------------
+
+\usepackage{textcomp}
+
+% Красная строка
+%--------------------------------------
+\usepackage{indentfirst}               
+%--------------------------------------             
+
+
+%Graphics
+%--------------------------------------
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+\usepackage{wrapfig}
+%--------------------------------------
+
+% Полуторный интервал
+%--------------------------------------
+\linespread{1.3}                    
+%--------------------------------------
+
+%Выравнивание и переносы
+%--------------------------------------
+% Избавляемся от переполнений
+\sloppy
+% Запрещаем разрыв страницы после первой строки абзаца
+\clubpenalty=10000
+% Запрещаем разрыв страницы после последней строки абзаца
+\widowpenalty=10000
+%--------------------------------------
+
+%Списки
+\usepackage{enumitem}
+
+%Подписи
+\usepackage{caption} 
+
+%Гиперссылки
+\usepackage{hyperref}
+
+\hypersetup {
+	unicode=true
+}
+
+%Рисунки
+%--------------------------------------
+\DeclareCaptionLabelSeparator*{emdash}{~--- }
+\captionsetup[figure]{labelsep=emdash,font=onehalfspacing,position=bottom}
+%--------------------------------------
+
+\usepackage{tempora}
+\usepackage{amsmath}
+\usepackage{color}
+\usepackage{listings}
+\lstset{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=L,
+  xleftmargin=\parindent,
+  language=C++,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{blue},
+  commentstyle=\itshape\color{purple},
+  identifierstyle=\color{black},
+  stringstyle=\color{red},
+  extendedchars=\true,
+}
+
+%--------------------------------------
+%			НАЧАЛО ДОКУМЕНТА
+%--------------------------------------
+
+\begin{document}
+
+%--------------------------------------
+%			ТИТУЛЬНЫЙ ЛИСТ
+%--------------------------------------
+\begin{titlepage}
+\thispagestyle{empty}
+\newpage
+
+
+%Шапка титульного листа
+%--------------------------------------
+\vspace*{-60pt}
+\hspace{-65pt}
+\begin{minipage}{0.3\textwidth}
+\hspace*{-20pt}\centering
+\includegraphics[width=\textwidth]{emblem.png}
+\end{minipage}
+\begin{minipage}{0.67\textwidth}\small \textbf{
+\vspace*{-0.7ex}
+\hspace*{-6pt}\centerline{Министерство науки и высшего образования Российской Федерации}
+\vspace*{-0.7ex}
+\centerline{Федеральное государственное бюджетное образовательное учреждение }
+\vspace*{-0.7ex}
+\centerline{высшего образования}
+\vspace*{-0.7ex}
+\centerline{<<Московский государственный технический университет}
+\vspace*{-0.7ex}
+\centerline{имени Н.Э. Баумана}
+\vspace*{-0.7ex}
+\centerline{(национальный исследовательский университет)>>}
+\vspace*{-0.7ex}
+\centerline{(МГТУ им. Н.Э. Баумана)}}
+\end{minipage}
+%--------------------------------------
+
+%Полосы
+%--------------------------------------
+\vspace{-25pt}
+\hspace{-35pt}\rule{\textwidth}{2.3pt}
+
+\vspace*{-20.3pt}
+\hspace{-35pt}\rule{\textwidth}{0.4pt}
+%--------------------------------------
+
+\vspace{1.5ex}
+\hspace{-35pt} \noindent \small ФАКУЛЬТЕТ\hspace{80pt} <<Информатика и системы управления>>
+
+\vspace*{-16pt}
+\hspace{47pt}\rule{0.83\textwidth}{0.4pt}
+
+\vspace{0.5ex}
+\hspace{-35pt} \noindent \small КАФЕДРА\hspace{50pt} <<Теоретическая информатика и компьютерные технологии>>
+
+\vspace*{-16pt}
+\hspace{30pt}\rule{0.866\textwidth}{0.4pt}
+  
+\vspace{11em}
+
+\begin{center}
+\Large {\bf Лабораторная работа № 1} \\ 
+\large {\bf по курсу <<Операционные системы>>} \\ 
+{ReactOS и NetBSD. Среда сборки, установки и
+тестирование в виртуальной машине} \\
+\end{center}\normalsize
+
+\vspace{8em}
+
+
+\begin{flushright}
+  {Студент группы ИУ9-42Б Нащекин Н. Д.\hspace*{15pt} \\
+  \vspace{2ex}
+  Преподаватель: Брагин А. В.\hspace*{15pt}}
+\end{flushright}
+
+\bigskip
+
+\vfill
+ 
+
+\begin{center}
+\textsl{Москва, 2024}
+\end{center}
+\end{titlepage}
+%--------------------------------------
+%		КОНЕЦ ТИТУЛЬНОГО ЛИСТА
+%--------------------------------------
+
+\renewcommand{\ttdefault}{pcr}
+
+\setlength{\tabcolsep}{3pt}
+\newpage
+\setcounter{page}{2}
+
+\section{Содержание}
+\begin{flushleft}
+3 - Цель \newline
+4 - Постановка задачи \newline
+5 - Практическая реализация \newline
+8 - Результаты \newline
+10 - Выводы \newline
+11 - Список литературы \newline
+\end{flushleft}
+\pagebreak
+
+\section{Цель}
+\begin{flushleft}
+Приобретение навыков по самостоятельной сборке «с нуля»
+дистрибутивов операционных систем ReactOS и NetBSD с последующей их
+установкой в виртуальную машину.
+
+\end{flushleft}
+\pagebreak
+
+\section{Постановка задачи}
+\begin{flushleft}
+ЧАСТЬ 1. СБОРКА ДИСТРИБУТИВА REACTOS \newline
+Настроить среду сборки и тестирования ReactOS на своём компьютере
+(или на компьютере в учебной аудитории университета), собрать установочный
+образ и произвести его установку в виртуальную машину с помощью
+программных средств виртуализации. \newline
+
+ЧАСТЬ 2. ОПЕРАЦИОННАЯ СИСТЕМА NETBSD: СРЕДА СБОРКИ,
+УСТАНОВКА И ТЕСТИРОВАНИЕ \newline
+Установить новый выпуск NetBSD из дистрибутива с официального сайта
+проекта NetBSD https://www.netbsd.org/
+в виртуальную машину. Настроить среду сборки и тестирования NetBSD в виртуальной машине на своём компьютере (или на компьютере в учебной аудитории университета). Пересобрать ядро в этой виртуальной машине, добавив вывод фамилии
+обучающегося в debug log.
+
+\end{flushleft}
+\pagebreak
+
+\section{Практическая реализация}
+\begin{flushleft}
+ЧАСТЬ 1 \newline
+Сначала мной была установлена ReactOS Build Environment (RosBE)[1]. После установки среды сборки я получил исходный код операционной системы[2]. Используя среду сборки, я собрал ISO-образ ReactOS и установил его в вирутальной машине. В настройках виртуальной машины я включил последовательный порт COM-1 и перенаправил вывод в файл для удобного изучения логов. \newline
+Далее сразу в нескольких файлах ядра (ntoskrnl) я добавил вывод своих фамилии и имени в лог, например в файле ntoskrnl/ex/init.c:
+\end{flushleft}
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,fontsize=\footnotesize,linenos]{cpp}
+/* Initialize keyed events */
+    if (ExpInitializeKeyedEventImplementation() == FALSE)
+    {
+        DPRINT1("Executive: Keyed event initialization failed\n");
+        return FALSE;
+    }
+
+    /* Initialize Win32K */
+    if (ExpWin32kInit() == FALSE)
+    {
+        DPRINT1("Executive: Win32 initialization failed\n");
+        return FALSE;
+    }
+    
+    DPRINT1("NASHCHEKIN NIKITA\n");
+    
+    
+    return TRUE;
+\end{minted}
+
+\begin{flushleft}
+В файле ntoskrnl/io/iomgr/driver.c:
+\end{flushleft}
+
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,fontsize=\footnotesize,linenos]{cpp}
+IopDeleteDriver(IN PVOID ObjectBody)
+{
+    PDRIVER_OBJECT DriverObject = ObjectBody;
+    PIO_CLIENT_EXTENSION DriverExtension, NextDriverExtension;
+    PAGED_CODE();
+
+    DPRINT1("Deleting driver object '%wZ'\n", &DriverObject->DriverName);
+    DPRINT1("NASHCHEKIN NIKITA!!!\n");
+
+    /* There must be no device objects remaining at this point */
+    ASSERT(!DriverObject->DeviceObject);
+
+    /* Get the extension and loop them */
+    DriverExtension = IoGetDrvObjExtension(DriverObject)->ClientDriverExtension;
+    while (DriverExtension)
+    {
+        /* Get the next one */
+        NextDriverExtension = DriverExtension->NextExtension;
+        ExFreePoolWithTag(DriverExtension, TAG_DRIVER_EXTENSION);
+
+        /* Move on */
+        DriverExtension = NextDriverExtension;
+    }
+
+    /* Check if the driver image is still loaded */
+    if (DriverObject->DriverSection)
+    {
+        /* Unload it */
+        MmUnloadSystemImage(DriverObject->DriverSection);
+    }
+
+    /* Check if it has a name */
+    if (DriverObject->DriverName.Buffer)
+    {
+        /* Free it */
+        ExFreePool(DriverObject->DriverName.Buffer);
+    }
+
+    /* Check if it has a service key name */
+    if (DriverObject->DriverExtension->ServiceKeyName.Buffer)
+    {
+        /* Free it */
+        ExFreePool(DriverObject->DriverExtension->ServiceKeyName.Buffer);
+    }
+}
+\end{minted}
+
+\begin{flushleft}
+Аналогичные строки я добавил в нескольких других файлах (для надежности!). Далее я пересобрал ядро и переустановил систему. \newline
+
+ЧАСТЬ 2 \newline
+Сначала я скачал образ дистрибутива ОС NetBSD[3] и установил его в виртуальную машину. При установке системы я не настроил использование com-порта, поэтому пришлось добавить в файл /boot.cfg строку \newline 
+consdev=com0,115200 \newline
+Аналогичным образом настроил вывод отладки в файл. Затем по ftp (из NetBSD) скачал архив с ядром системы[4], распаковал его, изменил несколько файлов, добавив вывод своей фамилии, и собрал ядро[5]. Заменив ядро, убедился в наличии моих фамилии и имени в логах.
+Фрагмент кода из файла usr/src/sys/kern/init\char`_ main.c:
+\end{flushleft}
+
+\begin{minted}[frame=lines,framesep=2mm,baselinestretch=1.2,fontsize=\footnotesize,linenos]{cpp}
+/* Create the aiodone daemon kernel thread. */
+	if (workqueue_create(&uvm.aiodone_queue, "aiodoned",
+	    uvm_aiodone_worker, NULL, PRI_VM, IPL_NONE, WQ_MPSAFE))
+		panic("fork aiodoned");
+
+	printf("NASHCHEKIN NIKITA!!!");
+	/* Mount the root file system. */
+	do {
+		domountroothook(root_device);
+		if ((error = vfs_mountroot())) {
+			printf("cannot mount root, error = %d\n", error);
+			boothowto |= RB_ASKNAME;
+			setroot(root_device,
+			    (rootdev != NODEV) ? DISKPART(rootdev) : 0);
+		}
+	} while (error != 0);
+	mountroothook_destroy();
+\end{minted}
+\pagebreak
+
+\section{Результаты}
+\begin{flushleft}
+Был реализован вывод моих фамилии и имени в лог при запуске операционных систем ReactOS и NetBSD. 
+
+\begin{figure}[H]
+
+\centering
+
+\includegraphics[width=0.8\linewidth]{1.png}
+
+\caption{Скриншот 1}
+
+\label{fig:mpr}
+
+\end{figure}
+
+\begin{figure}[H]
+
+\centering
+
+\includegraphics[width=0.8\linewidth]{2.png}
+
+\caption{Скриншот 2}
+
+\label{fig:mpr}
+
+\end{figure}
+
+\begin{figure}[H]
+
+\centering
+
+\includegraphics[width=0.8\linewidth]{3.png}
+
+\caption{Скриншот 3}
+
+\label{fig:mpr}
+
+\end{figure}
+
+\begin{figure}[H]
+
+\centering
+
+\includegraphics[width=0.8\linewidth]{4.png}
+
+\caption{Скриншот 4}
+
+\label{fig:mpr}
+
+\end{figure}
+
+\begin{figure}[H]
+
+\centering
+
+\includegraphics[width=0.8\linewidth]{5.png}
+
+\caption{Скриншот 5}
+
+\label{fig:mpr}
+
+\end{figure}
+
+\end{flushleft}
+\pagebreak 
+
+\section{Выводы}
+Выполнив данную лабораторную работу, я приобрёл навыки сборки с нуля дистрибутивов операционных систем и проведения их установки. Я смог найти файлы, отвечающие за инициализацию операционных систем, и добавил туда свои строки. Выполнять первую часть работы на ReactOS было проще: я мог изменить файлы из старшей системы, провести компиляцию ядра удобной средой сборки и просто переустановить систему. Во второй части мне пришлось вручную компилировать ядро внутри NetBSD, что немного сложнее.
+\pagebreak
+
+\section{Список литературы}
+\begin{flushleft}
+[1] - https://reactos.org/wiki/Building\char`_ ReactOS\newline
+[2] - https://github.com/reactos/reactos.git\newline
+[3] - https://www.netbsd.org/\newline
+[4] - http://ftp.NetBSD.org/pub/NetBSD/NetBSD-9.3/source/sets/syssrc.tgz\newline
+[5] - https://netbsd.org/docs/guide/en/chap-kernel.html\char`# chap-kernel-building-manually\newline
+\end{flushleft}
+\end{document}
