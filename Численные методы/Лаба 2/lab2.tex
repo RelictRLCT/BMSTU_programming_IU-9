@@ -1,0 +1,459 @@
+\documentclass[a4paper, 14pt]{extarticle}
+
+ 
+% Поля
+%--------------------------------------
+\usepackage{minted}
+\usepackage{xcolor}
+\usepackage{geometry}
+\usepackage{float}
+\usepackage{ragged2e}
+\geometry{a4paper,tmargin=2cm,bmargin=2cm,lmargin=3cm,rmargin=1cm}
+%--------------------------------------
+
+% Настройка minted
+%--------------------------------------
+\definecolor{bg}{rgb}{0.95,0.95,0.95} % Цвет фона
+\definecolor{commentgreen}{rgb}{0,0.5,0} % Цвет комментариев
+
+\setminted{
+	frame=lines,             % рамка сверху и снизу
+	framesep=2mm,            % отступ от рамки до кода
+	baselinestretch=1.2,     % межстрочный интервал
+	fontsize=\footnotesize,  % размер шрифта
+	linenos,                 % нумерация строк
+	breaklines,              % перенос строк, если они длинные
+	%bgcolor=bg,              % цвет фона
+	tabsize=4,               % размер табуляции
+	numbersep=5pt,           % отступ номеров строк от кода
+	escapeinside=||,         % возможность вставить LaTeX внутрь кода
+}
+%--------------------------------------
+
+%Russian-specific packages
+%--------------------------------------
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc} 
+\usepackage[english, main=russian]{babel}
+%--------------------------------------
+
+\usepackage{textcomp}
+
+% Красная строка
+%--------------------------------------
+\usepackage{indentfirst}               
+%--------------------------------------             
+
+
+%Graphics
+%--------------------------------------
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+\usepackage{wrapfig}
+%--------------------------------------
+
+% Полуторный интервал
+%--------------------------------------
+\linespread{1.3}                    
+%--------------------------------------
+
+%Выравнивание и переносы
+%--------------------------------------
+% Избавляемся от переполнений
+\sloppy
+% Запрещаем разрыв страницы после первой строки абзаца
+\clubpenalty=10000
+% Запрещаем разрыв страницы после последней строки абзаца
+\widowpenalty=10000
+%--------------------------------------
+
+%Списки
+\usepackage{enumitem}
+
+%Подписи
+\usepackage{caption} 
+
+%Гиперссылки
+\usepackage{hyperref}
+
+\hypersetup {
+	unicode=true
+}
+
+%Рисунки
+%--------------------------------------
+\DeclareCaptionLabelSeparator*{emdash}{~--- }
+\captionsetup[figure]{labelsep=emdash,font=onehalfspacing,position=bottom}
+%--------------------------------------
+
+\usepackage{newtxtext,newtxmath}
+\usepackage{amsmath}
+\usepackage{color}
+\usepackage{listings}
+\lstset{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=L,
+  xleftmargin=\parindent,
+  language=C++,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{blue},
+  commentstyle=\itshape\color{purple},
+  identifierstyle=\color{black},
+  stringstyle=\color{red},
+  extendedchars=\true,
+}
+
+%--------------------------------------
+%			НАЧАЛО ДОКУМЕНТА
+%--------------------------------------
+
+\begin{document}
+
+%--------------------------------------
+%			ТИТУЛЬНЫЙ ЛИСТ
+%--------------------------------------
+\begin{titlepage}
+\thispagestyle{empty}
+\newpage
+
+
+%Шапка титульного листа
+%--------------------------------------
+\vspace*{-60pt}
+\hspace{-65pt}
+\begin{minipage}{0.3\textwidth}
+\hspace*{-20pt}\centering
+\includegraphics[width=\textwidth]{emblem.png}
+\end{minipage}
+\begin{minipage}{0.67\textwidth}\small \textbf{
+\vspace*{-0.7ex}
+\hspace*{-6pt}\centerline{Министерство науки и высшего образования Российской Федерации}
+\vspace*{-0.7ex}
+\centerline{Федеральное государственное автономное образовательное учреждение }
+\vspace*{-0.7ex}
+\centerline{высшего образования}
+\vspace*{-0.7ex}
+\centerline{<<Московский государственный технический университет}
+\vspace*{-0.7ex}
+\centerline{имени Н.Э. Баумана}
+\vspace*{-0.7ex}
+\centerline{(национальный исследовательский университет)>>}
+\vspace*{-0.7ex}
+\centerline{(МГТУ им. Н.Э. Баумана)}}
+\end{minipage}
+%--------------------------------------
+
+%Полосы
+%--------------------------------------
+\vspace{-25pt}
+\hspace{-35pt}\rule{\textwidth}{2.3pt}
+
+\vspace*{-20.3pt}
+\hspace{-35pt}\rule{\textwidth}{0.4pt}
+%--------------------------------------
+
+\vspace{1.5ex}
+\hspace{-35pt} \noindent \small ФАКУЛЬТЕТ\hspace{80pt} <<Информатика и системы управления>>
+
+\vspace*{-16pt}
+\hspace{47pt}\rule{0.83\textwidth}{0.4pt}
+
+\vspace{0.5ex}
+\hspace{-35pt} \noindent \small КАФЕДРА\hspace{50pt} <<Теоретическая информатика и компьютерные технологии>>
+
+\vspace*{-16pt}
+\hspace{30pt}\rule{0.866\textwidth}{0.4pt}
+  
+\vspace{11em}
+
+\begin{center}
+\Large {\bf Лабораторная работа № 2} \\ 
+\large {\bf по курсу <<Численные методы>>} \\ 
+\end{center}\normalsize
+
+\vspace{8em}
+
+
+\begin{flushright}
+  {Студент группы ИУ9-62Б Нащёкин Н.Д.\hspace*{15pt} \\
+  \vspace{2ex}
+  Преподаватель: Домрачева А.Б.\hspace*{15pt}}
+\end{flushright}
+
+\bigskip
+
+\vfill
+ 
+
+\begin{center}
+\textsl{Москва, 2025}
+\end{center}
+\end{titlepage}
+%--------------------------------------
+%		КОНЕЦ ТИТУЛЬНОГО ЛИСТА
+%--------------------------------------
+
+\renewcommand{\ttdefault}{pcr}
+
+\setlength{\tabcolsep}{3pt}
+\newpage
+\setcounter{page}{2}
+
+\section{Задача}
+\begin{justify}
+• Найти $\int_a^b f(x)\,dx$ по формуле трапеций и по формуле Симпсона с погрешностью $\varepsilon = 0.001$. Сравнить
+требуемое число разбиений для обоих методов.
+
+
+\end{justify}
+\pagebreak
+
+\section{Основная теория}
+\begin{justify}
+
+\noindent\large {Метод средних прямоугольников}\\ \normalsize
+
+Пусть функция $f(x)$ непрерывна на отрезке $[a, b]$. Разобьём отрезок на $n$ равных отрезков точками
+$a = x_0, x_1, ..., x_n = b$. Тогда фигура под графиком функции $f(x)$ разобьётся на криволинейные 
+трапеции на полученных отрезках. Пусть $h = x_{i} - x_{i-1} = \frac{b - a}{n}, i = 1, ..., n$ -- постоянный шаг разбиения. 
+
+Для начала рассмотрим так называемые методы левых и правых прямоугольников. На каждом частичном отрезке возьмём левую границу и посчитаем площадь прямоугольника со сторонами 
+$f(x_{i-1})$ и $(x_{i} - x_{i-1}) = h$. Тогда $I_{li} = hf(x_{i-1})$ -- площади левых прямоугольников, 
+$i = 1, ..., n$. В таком случае $I_{l} = h \sum_{i=1}^{n} f(x_{i-1})$ -- приближённое методом левых прямоугольников 
+значение искомого интеграла. 
+
+Аналогично, взяв вместо левых границ частичных отрезков правые, получим 
+$I_{ri} = hf(x_{i})$ -- площади правых прямоугольников, $I_{r} = h \sum_{i=1}^{n} f(x_{i})$ -- приближённое значение
+интеграла. 
+
+Недостаток этих методов в том, что они имеют первый порядок точности. Существует метод средних (центральных) прямоугольников, 
+имеющий второй порядок точности. Для его реализации вместо левой или правой границы частичного отрезка берётся средняя точка: 
+$I_{si} = hf(x_{i}-\frac{h}{2})$. В таком случае приближённое значение интеграла: $I_{s} = h \sum_{i=1}^{n} f(x_{i} - \frac{h}{2})$. 
+
+Выведем погрешность метода средних прямоугольников. Приближённая формула для площади одного сегмента:
+\[
+\int_{x_{i-1}}^{x_i} f(x)\, dx \approx f\left(x_{i-1} + \frac{h}{2} \right) h,
+\]
+где \( h = x_i - x_{i-1} \).
+
+Погрешность на одном сегменте:
+\[
+\delta_i = \int_{x_{i-1}}^{x_i} f(x)\, dx - f\left(x_{i-1} + \frac{h}{2} \right) h.
+\]
+
+Разложим функцию \( f(x) \) в ряд Тейлора в точке \( x_{i-1} + \frac{h}{2} \):
+
+\[
+f(x) = f\left(x_{i-1} + \frac{h}{2}\right) + f'\left(x_{i-1} + \frac{h}{2}\right)\left(x - \left(x_{i-1} + \frac{h}{2}\right)\right) + \frac{f''(\varepsilon_i)}{2}\left(x - \left(x_{i-1} + \frac{h}{2}\right)\right)^2,
+\]
+где \( \varepsilon_i \in [x_{i-1}, x_i] \).
+
+Подставляя в выражение для \( \delta_i \), получаем:
+
+\[
+\delta_i = \int_{x_{i-1}}^{x_i} \left(f(x) - f\left(x_{i-1} + \frac{h}{2}\right)\right) dx = \frac{f''(\varepsilon_i) h^3}{24}, 
+\]
+
+Абсолютная погрешность на одном отрезке:
+
+\[
+|\delta_i| \leq \max_{x \in [x_{i-1}, x_i]} |f''(x)| \frac{h^3}{24}.
+\]
+
+Для всей фигуры (всего $n$ равных сегментов, $h = \frac{b-a}{n}$):
+
+\[
+|\delta| \leq \max_{x \in [a, b]} |f''(x)| \frac{(b - a)}{24}h^2 = \mathcal{O}(h^2).
+\]
+
+\noindent\large {Метод трапеций}\\ \normalsize
+
+Теперь в предыдущих обозначениях рассмотрим похожий метод приближённого нахождения определённого интеграла. Как и ранее,
+фигура под графиком функции $f(x)$ разбита на множество криволинейных трапеций.
+Тогда площадь каждой криволинейной трапеции примерно равна 
+\[
+\frac{f(x_{i-1}) + f(x_i)}{2}h. 
+\]
+Суммируя полученные
+площади, получим примерное значение интеграла $I = \int_a^b f(x)\,dx$:
+\[ 
+I \approx \frac{1}{2}h(f(x_0) + f(x_1) + f(x_1) + 
+f(x_2) + f(x_2) + ... + f(x_{n-1}) + f(x_{n-1}) + f(x_n)). 
+\]
+Заметим, что в полученной формуле все $f(x_i)$,
+ кроме $f(x_0) = f(a)$ и $f(x_n) = f(b)$, встречаются дважды. Учитывая это, получим: 
+\[
+I \approx h(\frac{f(a) + f(b)}{2} + \sum_{i=1}^{n-1} f(x_i)). \\
+\]
+
+Метод трапеций имеет второй порядок точности, как и метод средних прямоугольников.
+Аналогично нахождению погрешности для метода средних прямоугольников, можно найти погрешность для метода трапеций:
+\[
+|\delta| \leq \max_{x \in [a, b]} |f''(x)| \frac{(b - a)}{12}h^2 = \mathcal{O}(h^2).
+\]
+Как видно, для метода трапеций оценка погрешности в два раза хуже. \\
+
+\noindent\large {Метод Симпсона}\\ \normalsize
+
+В предыдущих обозначениях также верна приближённая формула: 
+\[
+I \approx \frac{h}{3}(f(x_0) + f(x_n) + 4(f(x_1) + f(x_3) + ... + f(x_{n-1}) + 2(f(x_2) + f(x_4) + ... + f(x_{n-2})))).
+\]
+Здесь число отрезков $n$ должно быть чётным.
+
+Получим оценку погрешности для метода Симпсона: 
+\[
+\int_{x_{i-1}}^{x_{i+1}} f(x) \, dx \approx \frac{h}{3} \left(f(x_{i-1}) + 4f(x_i) + f(x_{i+1}) \right),
+\]
+где $h = \frac{x_{i+1} - x_{i-1}}{2}$ — половина ширины параболического интервала.
+
+Для функции $f \in C^4[a, b]$ погрешность на таком двойном отрезке можно выразить как:
+
+\[
+\delta_i = -\frac{h^5}{90} f^{(4)}(\xi_i), \quad \xi_i \in [x_{i-1}, x_{i+1}].
+\]
+
+Если отрезок $[a, b]$ разбит на $n$ равных частей (где $n$ чётное), и $h = \frac{b - a}{n}$, то суммарная погрешность метода Симпсона на всём отрезке оценивается как:
+
+\[
+\left| \int_a^b f(x)\, dx - I \right| \leq \max_{x \in [a, b]} \left| f^{(4)}(x) \right| \frac{(b - a)^5}{180 n^4},
+\]
+где $I$ — приближённое значение интеграла, полученное по формуле Симпсона. Учитывая, что $h = \frac{b - a}{n}$, получим
+\[
+|\delta| \leq \max_{x \in [a, b]} \left| f^{(4)}(x) \right| \frac{(b - a)}{180}h^4 = \mathcal{O}(h^4).
+\]
+
+\noindent\large {Правило Рунге}\\ \normalsize
+
+Для оценки погрешности на практике часто применяют правило Рунге: необходимо найти приближённое значение $S$ с шагом 
+$h$ и с шагом $2h$, а затем посчитать $\Delta S(h) = \frac{S(h) - S(2h)}{2^p - 1}$, где $p = 2$ для метода трапеций и 
+метода прямоугольников и $p = 4$ для метода Симпсона. Теперь, когда при вычислениях с последовательным 
+увеличением $n$ достигается неравенство $|\Delta S(h)| \le \varepsilon$, где $\varepsilon$ -- некоторая 
+заданная абсолютная погрешность, вычисления прекращаются.
+
+\end{justify}
+\pagebreak
+
+\section{Практическая реализация}
+Листинг 1 — реализация программы
+\begin{minted}{python}
+import math
+# Интеграл = 8.0366775 - Вычислено калькулятором
+
+
+def f(x: float) -> float:
+	return math.log(2 * x)
+
+
+eps = 0.001
+
+
+def trap_method(a: float, b: float, n: int) -> float:
+	h = (b - a) / n
+	summ = 0
+	for i in range(1, n, 1):
+		summ += f(a + i * h)
+	summ += (f(a) + f(b)) / 2
+	return summ * h
+
+
+def simpson_method(a: float, b: float, n: int) -> float:
+	h = (b - a) / n
+	sum1 = 0
+	sum2 = 0
+	for i in range(1, n, 2):
+		sum1 += f(a + i * h)
+	
+	for i in range(2, n, 2):
+		sum2 += f(a + i * h)
+	
+	summ = 4*sum1 + 2*sum2 + f(a) + f(b)
+	return summ * h / 3
+
+
+def average_rectangle(a: float, b: float, n: int) -> float:
+	h = (b - a) / n
+	summ = 0
+	for i in range(0, n, 1):
+		summ += f(a + i * h + h / 2)
+	return summ * h
+
+
+def runge_rule(S_h, S_2h, p):
+	return (S_h - S_2h) / (2 ** p - 1)
+
+
+def main():
+	a = 0.5
+	b = 2 * math.e
+	
+	n_t = 2
+	S_2h = trap_method(a, b, n_t)
+	S_h = trap_method(a, b, 2 * n_t)
+	S_delta = runge_rule(S_h, S_2h, p=2)
+	while abs(S_delta) > eps:
+		n_t *= 2
+		S_2h = trap_method(a, b, n_t)
+		S_h = trap_method(a, b, 2 * n_t)
+		S_delta = runge_rule(S_h, S_2h, p=2)
+	
+	n_s = 2
+	S_2h_s = simpson_method(a, b, n_s)
+	S_h_s = simpson_method(a, b, 2 * n_s)
+	S_delta_s = runge_rule(S_h_s, S_2h_s, p=4)
+	while abs(S_delta_s) > eps:
+		n_s *= 2
+		S_2h_s = simpson_method(a, b, n_s)
+		S_h_s = simpson_method(a, b, 2 * n_s)
+		S_delta_s = runge_rule(S_h_s, S_2h_s, p=4)
+	
+	n_s_t = 2
+	S_2h_s_t = average_rectangle(a, b, n_s_t)
+	S_h_s_t = average_rectangle(a, b, 2 * n_s_t)
+	S_delta_s_t = runge_rule(S_h_s_t, S_2h_s_t, p=2)
+	while abs(S_delta_s_t) > eps:
+		n_s_t *= 2
+		S_2h_s_t = average_rectangle(a, b, n_s_t)
+		S_h_s_t = average_rectangle(a, b, 2 * n_s_t)
+		S_delta_s_t = runge_rule(S_h_s_t, S_2h_s_t, p=2)
+	
+	print(f'     Метод трапеций    Метод Симпсона   Метод сред. прямоугольников')
+	print(f'n          {n_t}                {n_s}                    {n_s_t}')
+	print(f'I*         {S_h:.6f}          {S_h_s:.6f}          {S_h_s_t:.6f}')
+	print(f'R          {S_delta:.6f}          {S_delta_s:.6f}         {S_delta_s_t:.6f}')
+	print(f'I* + R     {S_h + S_delta:.6f}          {S_h_s + S_delta_s:.6f}          {S_h_s_t + S_delta_s_t:.6f}')
+
+
+if __name__ == "__main__":
+	main()
+
+\end{minted}
+
+Мой вариант -- 22. По условию необходимо найти приближённое значение интеграла $\int_{0.5}^{2e} ln(2x)\,dx$.
+Все три метода вычислений реализованы в виде отдельных функций. Также для удобства была выделена 
+функция для вычисления $\Delta S(h)$ по правилу Рунге. На рисунке 1 представлен результат работы программы. Здесь $n$ -- 
+число разбиений, $I*$ -- вычисленное приближённое значение интеграла, $R$ -- последняя $\Delta S(h)$ (уточнение по 
+Ричардсону).
+
+\begin{figure}[H]
+	
+	\centering
+	
+	\includegraphics[width=0.8\linewidth]{1.png}
+	\captionsetup{justification=centering}
+	\caption{Результат выполнения программы}
+	
+	\label{fig:mpr}
+	
+\end{figure}
+
+\pagebreak
+
+\section{Вывод}
+В данной лабораторной работе были реализованы метод трапеций, метод средних прямоугольников и метод Симпсона 
+для приближённого вычисления значения определённого интеграла. Из выведенных программой результатов видно, 
+что метод Симпсона позволяет найти значение интеграла с заданной погрешностью с гораздо меньшим числом разбиений: для метода трапеций и средних прямоугольников это значение равно $32$, а для метода Симпсона -- $8$. Кроме того, оба метода 
+корректно вычисляют приближённое значение заданного интеграла: значение, полученное на калькуляторе, равно $8.0366775$.
+\end{document}
