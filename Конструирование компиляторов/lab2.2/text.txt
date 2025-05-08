@@ -1,0 +1,42 @@
+// Суммирование элементов массива
+int sum(int *values, int n) {
+  int res = 0, i;
+  int *x[10];
+  int (*y)[10];
+  int *z[10];
+
+  for (i = 0; i < n; ++i) {
+    res += *(values + i);
+  };
+
+  return res;
+}
+
+
+/* Вычисление многочлена по схеме Горнера */
+double polynom(double x, double *coefs, int n) {
+  double res = 0;
+  int i;
+
+  for (i = 0; i < n; i++) {
+    res *= x;
+    res += coefs[i];
+  };
+
+  return res;
+}
+
+/* Вычисление многочлена x³ + x² + x + 1 */
+double polynom1111(int x) {
+  double coefs[4];
+  int i = 0;
+
+  while (i < 4) *(coefs + i++) /* Побочный эффект! */ = 1.0;
+
+  return polynom(x, coefs, 4);
+}
+
+// Вычисление числа Фибоначчи
+int fib(int n) {
+  return n < 1 ? 0 : n == 1 ? 0 : fib(n - 1) + fib(n - 2);
+}
