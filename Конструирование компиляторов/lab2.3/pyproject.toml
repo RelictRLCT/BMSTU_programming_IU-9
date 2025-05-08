@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "lab2-3"
+version = "0.1.0"
+description = ""
+authors = ["RELICT <pigift@yandex.ru>"]
+readme = "README.md"
+packages = [{include = "lab2"}]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+graphviz = "^0.20.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
