@@ -1,0 +1,13 @@
+digraph CFG {
+  node [shape=record,fontname="Courier",fontsize=10];
+
+  "entry" [label="{entry|a = store 14\lcmptmp = cmp a 0\lif cmptmp\l}"];
+  "entry" -> "then";
+  "entry" -> "ifcont";
+
+  "then" [label="{then|c = store 10\l}"];
+  "then" -> "ifcont";
+
+  "ifcont" [label="{ifcont|ret 0\l}"];
+
+}
