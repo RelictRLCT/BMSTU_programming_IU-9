@@ -1,0 +1,372 @@
+\documentclass[a4paper, 14pt]{extarticle}
+
+ 
+% Поля
+%--------------------------------------
+\usepackage{minted}
+\usepackage{xcolor}
+\usepackage{geometry}
+\usepackage{float}
+\usepackage{ragged2e}
+\geometry{a4paper,tmargin=2cm,bmargin=2cm,lmargin=3cm,rmargin=1cm}
+%--------------------------------------
+
+% Настройка minted
+%--------------------------------------
+\definecolor{bg}{rgb}{0.95,0.95,0.95} % Цвет фона
+\definecolor{commentgreen}{rgb}{0,0.5,0} % Цвет комментариев
+
+\setminted{
+	frame=lines,             % рамка сверху и снизу
+	framesep=2mm,            % отступ от рамки до кода
+	baselinestretch=1.2,     % межстрочный интервал
+	fontsize=\footnotesize,  % размер шрифта
+	linenos,                 % нумерация строк
+	breaklines,              % перенос строк, если они длинные
+	%bgcolor=bg,              % цвет фона
+	tabsize=4,               % размер табуляции
+	numbersep=5pt,           % отступ номеров строк от кода
+	escapeinside=||,         % возможность вставить LaTeX внутрь кода
+}
+%--------------------------------------
+
+%Russian-specific packages
+%--------------------------------------
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc} 
+\usepackage[english, main=russian]{babel}
+%--------------------------------------
+
+\usepackage{textcomp}
+
+% Красная строка
+%--------------------------------------
+\usepackage{indentfirst}               
+%--------------------------------------             
+
+
+%Graphics
+%--------------------------------------
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+\usepackage{wrapfig}
+%--------------------------------------
+
+% Полуторный интервал
+%--------------------------------------
+\linespread{1.3}                    
+%--------------------------------------
+
+%Выравнивание и переносы
+%--------------------------------------
+% Избавляемся от переполнений
+\sloppy
+% Запрещаем разрыв страницы после первой строки абзаца
+\clubpenalty=10000
+% Запрещаем разрыв страницы после последней строки абзаца
+\widowpenalty=10000
+%--------------------------------------
+
+%Списки
+\usepackage{enumitem}
+
+%Подписи
+\usepackage{caption} 
+
+%Гиперссылки
+\usepackage{hyperref}
+
+\hypersetup {
+	unicode=true
+}
+
+%Рисунки
+%--------------------------------------
+\DeclareCaptionLabelSeparator*{emdash}{~--- }
+\captionsetup[figure]{labelsep=emdash,font=onehalfspacing,position=bottom}
+%--------------------------------------
+
+\usepackage{newtxtext,newtxmath}
+\usepackage{amsmath}
+\usepackage{color}
+\usepackage{listings}
+\lstset{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=L,
+  xleftmargin=\parindent,
+  language=C++,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{blue},
+  commentstyle=\itshape\color{purple},
+  identifierstyle=\color{black},
+  stringstyle=\color{red},
+  extendedchars=\true,
+}
+
+%--------------------------------------
+%			НАЧАЛО ДОКУМЕНТА
+%--------------------------------------
+
+\begin{document}
+
+%--------------------------------------
+%			ТИТУЛЬНЫЙ ЛИСТ
+%--------------------------------------
+\begin{titlepage}
+\thispagestyle{empty}
+\newpage
+
+
+%Шапка титульного листа
+%--------------------------------------
+\vspace*{-60pt}
+\hspace{-65pt}
+\begin{minipage}{0.3\textwidth}
+\hspace*{-20pt}\centering
+\includegraphics[width=\textwidth]{emblem.png}
+\end{minipage}
+\begin{minipage}{0.67\textwidth}\small \textbf{
+\vspace*{-0.7ex}
+\hspace*{-6pt}\centerline{Министерство науки и высшего образования Российской Федерации}
+\vspace*{-0.7ex}
+\centerline{Федеральное государственное автономное образовательное учреждение }
+\vspace*{-0.7ex}
+\centerline{высшего образования}
+\vspace*{-0.7ex}
+\centerline{<<Московский государственный технический университет}
+\vspace*{-0.7ex}
+\centerline{имени Н.Э. Баумана}
+\vspace*{-0.7ex}
+\centerline{(национальный исследовательский университет)>>}
+\vspace*{-0.7ex}
+\centerline{(МГТУ им. Н.Э. Баумана)}}
+\end{minipage}
+%--------------------------------------
+
+%Полосы
+%--------------------------------------
+\vspace{-25pt}
+\hspace{-35pt}\rule{\textwidth}{2.3pt}
+
+\vspace*{-20.3pt}
+\hspace{-35pt}\rule{\textwidth}{0.4pt}
+%--------------------------------------
+
+\vspace{1.5ex}
+\hspace{-35pt} \noindent \small ФАКУЛЬТЕТ\hspace{80pt} <<Информатика и системы управления>>
+
+\vspace*{-16pt}
+\hspace{47pt}\rule{0.83\textwidth}{0.4pt}
+
+\vspace{0.5ex}
+\hspace{-35pt} \noindent \small КАФЕДРА\hspace{50pt} <<Теоретическая информатика и компьютерные технологии>>
+
+\vspace*{-16pt}
+\hspace{30pt}\rule{0.866\textwidth}{0.4pt}
+  
+\vspace{11em}
+
+\begin{center}
+\Large {\bf Лабораторная работа № 5} \\ 
+\large {\bf по курсу <<Численные методы>>} \\ 
+\end{center}\normalsize
+
+\vspace{8em}
+
+
+\begin{flushright}
+  {Студент группы ИУ9-62Б Нащёкин Н.Д.\hspace*{15pt} \\
+  \vspace{2ex}
+  Преподаватель: Домрачева А.Б.\hspace*{15pt}}
+\end{flushright}
+
+\bigskip
+
+\vfill
+ 
+
+\begin{center}
+\textsl{Москва, 2025}
+\end{center}
+\end{titlepage}
+%--------------------------------------
+%		КОНЕЦ ТИТУЛЬНОГО ЛИСТА
+%--------------------------------------
+
+\renewcommand{\ttdefault}{pcr}
+
+\setlength{\tabcolsep}{3pt}
+\newpage
+\setcounter{page}{2}
+
+\section{Задача}
+\begin{justify}
+1. Найти минимум функции двух переменных с точностью $\varepsilon = 0.001$, начиная 
+итерации из точки $X^0$. \\
+2. Найти минимум аналитически.\\
+3. Сравнить полученные результаты.  
+
+
+\end{justify}
+\pagebreak
+
+\section{Основная теория}
+\begin{justify}
+
+\noindent\large {Метод наискорейшего спуска}\\ \normalsize
+
+Метод наискорейшего спуска -- итерационный метод, позволяющий найти 
+точку минимума заданной функции. Пусть для функции $f(x_1, ..., x_n)$ на $k$-ом шаге 
+имеем приближение к минимуму $X^k \approx (x^k_1, ..., x^k_n)$. Рассмотрим функцию 
+$\varphi_k(t) = f(x^k_1 - t \frac{\partial f}{\partial x_1}(X^k), ..., 
+x^k_n - t \frac{\partial f}{\partial x_n}(X^k)) = f(X^k - t*grad(f(X^k)))$. 
+
+Функция $\varphi_k(t)$ -- это ограничение функции $f(X)$ на прямую градиентного 
+(наискорейшего) спуска, проходящую через точку $k$-го приближения $X^k$.
+Пусть $t^*$ -- точка минимума этой функции. Тогда следующее приближение к 
+точке минимума:
+$X^{k+1} = X^k -t^* * grad(f(X^k)) = x^k_1 - t^* \frac{\partial f}{\partial x_1}(X^k), ..., x^k_n - t^* \frac{\partial f}{\partial x_n}(X^k)$.
+
+Итерации продолжаются, пока не будет выполнено условие завершения счёта: 
+\[	
+	||grad(f(X^k))|| = \max_{1 \le i \le n}{|\frac{\partial f}{\partial x_i}(X^k)|} < \varepsilon
+\]
+
+Чаще всего точно искать минимум функции $\varphi(t)$ не нужно и достаточно 
+ограничиться лишь одним приближением и поиском $t^k$, например, по методу парабол.
+Тогда в двумерном случае приближения будут особенно простыми: 
+\[
+	(x_{k+1}, y_{k+1}) = (x_k -t^k \frac{\partial f}{\partial x}, 
+	y_k -t^k \frac{\partial f}{\partial y}).
+\]
+Здесь $t^k = -\frac{\varphi'_k(0)}{\varphi''_k(0)}$, где 
+$\varphi'_k(0) = - (\frac{\partial f}{\partial x})^2 
+- (\frac{\partial f}{\partial y})^2$, 
+$\varphi''_k(0) = \frac{\partial^2 f}{\partial x^2} (\frac{\partial f}{\partial x})^2  + 2 \frac{\partial^2 f}{\partial x \partial y} \frac{\partial f}{\partial x} 
+\frac{\partial f}{\partial y} + \frac{\partial^2 f}{\partial y^2} 
+(\frac{\partial f}{\partial y})^2$, все частные производные здесь берутся в точке 
+$(x_k, y_k)$.
+
+
+\end{justify}
+\pagebreak
+
+\section{Практическая реализация}
+Листинг 1 — реализация программы
+\begin{minted}{python}
+from sympy import *
+
+
+# f(x) = 2 * x_1^2 + 3 * x_2^2 - 2 * sin((x_1 - x_2) / 2) + x_2
+# x0 = (0, 0)
+
+
+eps = 0.001
+
+
+x_1 = Symbol("x_1")
+x_2 = Symbol("x_2")
+f = 2 * x_1 ** 2 + 3 * x_2 ** 2 - 2 * sin((x_1 - x_2) / 2) + x_2
+
+
+def norm(point: dict):
+	df_x1 = diff(f, x_1).subs(point).evalf()
+	df_x2 = diff(f, x_2).subs(point).evalf()
+	return max(abs(df_x1), abs(df_x2))
+
+
+def phi_k_first(x_k):
+	return -(diff(f, x_1).subs(x_k) ** 2).evalf() - (diff(f, x_2).subs(x_k) ** 2).evalf()
+
+
+def phi_k_second(x_k):
+	return (
+		diff(f, x_1, 2).subs(x_k).evalf() * diff(f, x_1).subs(x_k).evalf() ** 2
+		+ 2
+		* diff(f, x_1, x_2).subs(x_k).evalf()
+		* diff(f, x_1).subs(x_k).evalf()
+		* diff(f, x_2).subs(x_k).evalf()
+		+ diff(f, x_2, 2).subs(x_k).evalf() * diff(f, x_2).subs(x_k).evalf() ** 2
+	)
+
+
+def t_k(x_k):
+	return - phi_k_first(x_k) / phi_k_second(x_k)
+
+
+def grad_down():
+	x_k = {x_1: 0, x_2: 0}
+	x_k1 = {x_1: 0, x_2: 0}
+	while norm(x_k) >= eps:
+		x_k = x_k1
+		x_k1 = {
+			x_1: x_k[x_1] - t_k(x_k) * diff(f, x_1).subs(x_k).evalf(),
+			x_2: x_k[x_2] - t_k(x_k) * diff(f, x_2).subs(x_k).evalf()
+		}
+	return x_k1
+
+
+def find_min():
+	df_dx1 = diff(f, x_1)
+	df_dx2 = diff(f, x_2)
+	critical_point = nsolve([df_dx1, df_dx2], (x_1, x_2), [0, 0])
+	return critical_point
+
+
+def main():
+	res_numeric = grad_down()
+	res_analytic = find_min()
+	
+	print(f'eps = {eps}')
+	print(f'Точка минимума: (x, y) = ({res_numeric[x_1]:.6f}, {res_numeric[x_2]:.6f})')
+	print(f'Точка минимума, вычисленная аналитически: (x, y) = ({res_analytic[0]:.6f}, {res_analytic[1]:.6f})')
+	print(f'Абсолютные погрешности. По x: {abs(res_numeric[x_1] - res_analytic[0]):.6f}; '
+		f'по y: {abs(res_numeric[x_2] - res_analytic[1]):.6f}')
+	print(f"Норма в найденной точке минимума: {norm(res_numeric):.6f}")
+
+
+if __name__ == "__main__":
+main()
+
+
+\end{minted}
+
+Мой вариант -- 22. По условию требуется найти минимум функции $f = 2 x_1^2 + 3 x_2^2 - 2 sin(\frac{x_1 - x_2}{2}) + x_2$, $X^0 = (0, 0)$. 
+Метод наискорейшего спуска реализован 
+в функции $grad\_down()$. Также по условию необходимо сравнить полученный результат с аналитическим решением. Для этого, например с использованием библиотеки символьных 
+вычислений $SymPy$, нужно найти решение системы 
+\[
+\begin{cases}
+	\frac{\partial f}{\partial x} = 0 \\
+	\frac{\partial f}{\partial y} = 0.
+\end{cases}
+\]
+Решения этой системы -- критические точки, которые нужно проверить на наличие 
+экстремума с помощью достаточного условия его существования: 
+$\frac{\partial^2 f}{\partial x^2} \frac{\partial^2 f}{\partial y^2} - \frac{\partial^2 f}{\partial x \partial y} > 0$, причём если $\frac{\partial^2 f}{\partial x^2} > 0$, то это точка минимума (нас интересует этот случай). Но в случае 
+с заданной функцией критическая точка только одна, она и является точкой минимума, 
+поэтому дополнительную проверку достаточного условия можно не проводить.  
+Результат работы программы приведён на рисунке 1.
+
+
+\begin{figure}[H]
+	
+	\centering
+	
+	\includegraphics[width=0.8\linewidth]{1.png}
+	\captionsetup{justification=centering}
+	\caption{Результат выполнения программы}
+	
+	\label{fig:mpr}
+	
+\end{figure}
+
+\pagebreak
+
+\section{Вывод}
+В данной лабораторной работе был реализован метод наискорейшего спуска для 
+поиска точки минимума функции двух переменных. Кроме того, требуемая точка также 
+была найдена аналитически. Результаты численного и аналитического поиска, а также норма градиента заданной функции в численно найденной точке выводятся на экран. 
+\end{document}
